@@ -59,7 +59,7 @@
 
         <a class="btn btn-success create-btn" href="<?= base_url('stock/add'); ?>">Add New Stock</a>
 
-        <table id="myTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
+        <table id="myTableStockList" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
             <thead>
                 <tr>
                     <th>Product Code</th>
@@ -73,169 +73,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($stockList as $cl) : ?>
-                    <?php if(intval($cl['rate']) <= intval($cl['threshold'])){
-                        echo '<tr class="table-active" style="background-color: #FFCCCB"> ';
-                    }else{
-                        echo '<tr class="table-active"> ';
-                    }  ?>
-                    
-                        <td><?php echo $cl['sku']; ?></td>
-                        <td><?php echo $cl['product']; ?></td>
-                        <td><?php echo $cl['description']; ?></td>
-                        <td><b><?php echo $cl['rate']; ?></b></td>
-                        <td><b><?php echo $cl['threshold']; ?></b></td>
-                        <td><?php echo $cl['unit']; ?></td>
-                        <td><?php echo $cl['amount']; ?></td>
-                        
-                        <td>
-                            <a class='btn btn-success' href='' data-toggle='modal' data-target='#updateStockModal-<?php echo $cl['stock_id']; ?>' value='<?php echo $cl['stock_id']; ?>' title='Add Stock'><i class='fas fa-plus'></i></a>
-                            <a class='btn btn-info' href='' data-toggle='modal' data-target='#historyModal-<?php echo $cl['stock_id']; ?>' value='<?php echo $cl['stock_id']; ?>' title='History'><i class='fas fa-list'></i></a>
-                            <a href="edit/<?php echo $cl['stock_id']; ?>" class='btn btn-primary'><i class="fa fa-edit" title='Edit'></i></a>
-                            <a class='btn btn-danger' onclick="return confirm('Press OK to confirm delete stock?')" href="delete/<?php echo $cl['stock_id']; ?>" title='Delete'><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>   
-                <?php endforeach; ?>
             </tbody>
         </table>
-
-        <!-- MODAL FOR HISTORY -->
-        <?php foreach($stockList as $plu) : ?>
-            <div id="historyModal-<?php echo $plu['stock_id'];?>" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">History Stock</h4>
-                        <h5><?php echo $plu['sku'];?> - <?php echo $plu['product'];?></h5>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body" >  
-                      
-                    <div class="modal-body" style="align-self:center;">  
-
-                        <table id="myTable" class="table table-striped table-bordered table-sm align">
-                            <tr>
-                                <th>Transaction Date</th>
-                                <th>Division</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Activity</th>
-                                <th>Remarks</th>
-                            </tr>
-
-                            <?php foreach($history_stock_txn as $ht) : ?>
-                                <?php if($plu['stock_id'] == $ht['stock_id'])  : ?>
-                                    <tr>
-                                        <td><?php echo $ht['timestamp'];?></td>
-                                        <td><?php echo $ht['division'];?></td>
-                                        <td><?php echo $ht['product'];?></td>
-                                        <td><?php echo $ht['quantity'];?></td>
-                                        <td><?php echo $ht['activity'];?></td>
-                                        <td><?php echo $ht['remarks']; ?></td>
-                                    </tr>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-
-                        </table>
-
-                        </div>
-                        
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
-                    </div>
-
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-        <!-- END MODAL FOR HISTORY -->
-
-        <!-- MODAL FOR ADD STOCK -->
-        <?php foreach($stockList as $plu) : ?>
-            <div id="updateStockModal-<?php echo $plu['stock_id'];?>" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Update Stock</h4>
-                        <h5><?php echo $plu['sku'];?> - <?php echo $plu['product'];?></h5>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body" >  
-
-                    <form action="<?= base_url('stockcontroller/update_restock'); ?>" method="post" accept-charset="utf-8">
-                      
-                            <div style="padding: 1rem; ">
-                            
-                            <div class="row">
-                    
-                                <input type="hidden" class="form-control" name="stock_id" value="<?php echo $plu['stock_id']; ?>">
-
-                                <div class="col-sm-4" >
-                                    <p><b>SKU: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="sku" value="<?php echo $plu['sku']; ?>" readonly>
-                                </div>
-
-                                <div class="col-sm-4" >
-                                    <p><b>Product: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="product" value="<?php echo $plu['product']; ?>" readonly>
-                                </div>
-
-                                <div class="col-sm-4" >
-                                    <p><b>Description: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <textarea name="description" rows="4" cols="50" class="form-control" readonly><?php echo $plu['description']; ?></textarea>
-                                </div>
-                                
-                                <div class="col-sm-4" >
-                                    <p><b>Remaining Stocks: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="rate-<?php echo $plu['stock_id']; ?>" name="rate" value="<?php echo $plu['rate']; ?>" readonly>
-                                </div>
-                                <br><br><br><br>
-                                <div class="col-sm-12" >
-                                    <h5>Stock to be added:</h5>
-                                </div> 
-                                <!-- for request transaction list -->
-                               
-                                <div class="col-sm-4" >
-                                    <p><b>Quantity: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <input type="number"  class="form-control" name="updated_stock" required>
-                                </div>
-
-                                </div>
-                                <div class="center-button" style="margin-top:3rem;">
-                                    <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm Update Stock?')">Update</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </form> 
-                        
-                    </div>
-
-                    
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-        <!-- END MODAL FOR  ADD STOCK -->
 
         <!-- MODAL FOR WISH LIST -->
         <div id="wishModal" class="modal fade" role="dialog">
@@ -248,28 +87,19 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body" style="align-self:center;">  
+                <div class="modal-body">  
                     
-                        <table id="cartTable" class="table table-striped table-bordered table-sm align">
-                            <tr>
-                                <th>Product Code</th>
-                                <th>Name of Product</th>
-                                <th>No of Stocks</th>
-                                <th>Requested By</th>
-                            </tr>
-
-                            <?php foreach($stockList as $ht) : ?>
-                                <?php if($ht['wish'] != "") : ?>
-                                    <tr>
-                                        <td><?php echo $ht['sku'];?></td>
-                                        <td><?php echo $ht['product'];?> - <?php echo $ht['description'];?></td>
-                                        <td><?php echo $ht['rate'];?> <?php echo $ht['unit'];?></td>
-                                        <td><?php echo $ht['wish'];?></td>
-                                        
-                                    </tr>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-
+                        <table id="myTableWishList" style="width: 100% !important"class="table table-striped table-bordered table-sm align">
+                            <thead>
+                                <tr>
+                                    <th>Product Code</th>
+                                    <th>Name of Product</th>
+                                    <th>No of Stocks</th>
+                                    <th>Requested By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
                         </table>   
                 </div>
 
@@ -283,6 +113,131 @@
             </div>
         </div>
         <!-- END MODAL FOR WISH LIST -->
+
+        <!-- MODAL FOR HISTORY -->
+        <div id="historyModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">History Stock</h4>
+                    <h5 id="sku"></h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" >  
+                    
+                <div class="modal-body" style="align-self:center;">  
+
+                    <table id="myTableHistoryList" class="table table-striped table-bordered table-sm align">
+                        <tr>
+                            <thead>
+                                <th>Transaction Date</th>
+                                <th>Division</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Activity</th>
+                                <th>Remarks</th>
+                            </thead>
+                        </tr>
+                        <tbody>
+                        </tbody>
+
+                    </table>
+
+                    </div>
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL FOR HISTORY -->
+
+        <!-- MODAL FOR ADD STOCK -->
+        <div id="updateStockModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Stock</h4>
+                    <h5 id="sku_label"></h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" >  
+
+                <form action="<?= base_url('stockcontroller/update_restock'); ?>" method="post" accept-charset="utf-8">
+                    
+                        <div style="padding: 1rem; ">
+                        
+                        <div class="row">
+                
+                            <input type="hidden" class="form-control" name="stock_id">
+
+                            <div class="col-sm-4" >
+                                <p><b>SKU: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="sku" readonly>
+                            </div>
+
+                            <div class="col-sm-4" >
+                                <p><b>Product: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="product" readonly>
+                            </div>
+
+                            <div class="col-sm-4" >
+                                <p><b>Description: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <textarea name="description" rows="4" cols="50" class="form-control" readonly></textarea>
+                            </div>
+                            
+                            <div class="col-sm-4" >
+                                <p><b>Remaining Stocks: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="rate" readonly>
+                            </div>
+                            <br><br><br><br>
+                            <div class="col-sm-12" >
+                                <h5>Stock to be added:</h5>
+                            </div> 
+                            <!-- for request transaction list -->
+                            
+                            <div class="col-sm-4" >
+                                <p><b>Quantity: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <input type="number"  class="form-control" name="updated_stock" required>
+                            </div>
+
+                            </div>
+                            <div class="center-button" style="margin-top:3rem;">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm Update Stock?')">Update</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form> 
+                    
+                </div>
+
+                
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL FOR  ADD STOCK -->
 </div>
 
 <script>
@@ -303,16 +258,134 @@ $(document).ready(function() {
         } );
     } );
  
-    var table = $('#myTable').DataTable( {
-        dom: 'Bflrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        orderCellsTop: true,
-        fixedHeader: true,
-        lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+    $(document).ready(function(e){
+        var base_url = "<?php echo base_url();?>";
+        $('#myTableStockList').DataTable({
+            'pageLength': 10,
+            'serverSide': true,
+            'processing': true,
+            'ordering': false,
+            "bDestroy": true,
+            'order': [],
+            'ajax': {
+                url : base_url+'Stockcontroller/stock_list_ajax/',
+                type : 'POST',
+                dataSrc: function(json) {
+                    console.log(json);
+                    if (json && Array.isArray(json.data)) {
+                        if (json.data.length === 0) {
+                            $('.dataTables_processing').hide();
+                            $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                            return [];
+                        }
+                        return json.data;
+                    }
+                    return [json.data];
+                }
+            },
+            language: {
+                searchPlaceholder: 'Search Product Code or Name or Description',
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+            },
+            "rowCallback": function( row, data, index ) {
+                if ( data[3] >= data[4] ){
+                    $('td', row).css('background-color', '#FAA0A0');
+                }
+            }
+        });
+
+        $('#myTableWishList').DataTable({
+            'pageLength': 10,
+            'serverSide': true,
+            'processing': true,
+            'ordering': false,
+            "bDestroy": true,
+            'order': [],
+            'ajax': {
+                url : base_url+'Stockcontroller/wish_list_ajax/',
+                type : 'POST',
+                dataSrc: function(json) {
+                    console.log(json);
+                    if (json && Array.isArray(json.data)) {
+                        if (json.data.length === 0) {
+                            $('.dataTables_processing').hide();
+                            $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                            return [];
+                        }
+                        return json.data;
+                    }
+                    return [json.data];
+                }
+            },
+            language: {
+                searchPlaceholder: 'Product Code or Name or Requested By',
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+            }
+        });
         
-    } );
+    });
+
+    $(document).on('click', '#historyBtn', function() {
+        var id = $(this).val();
+        var base_url = "<?php echo base_url();?>";
+       
+            $('#historyModal').modal('show');
+            // history table
+            var base_url = "<?php echo base_url();?>";
+            $('#myTableHistoryList').DataTable({
+            'pageLength': 10,
+            'serverSide': true,
+            'processing': true,
+            'ordering': false,
+            "bDestroy": true,
+            'order': [],
+            'ajax': {
+                url : base_url+'Stockcontroller/history_list_ajax/'+id,
+                type : 'POST',
+                dataSrc: function(json) {
+                    console.log(json);
+                    if (json && Array.isArray(json.data)) {
+                        if (json.data.length === 0) {
+                            $('.dataTables_processing').hide();
+                            $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                            return [];
+                        }
+                        return json.data;
+                    }
+                    return [json.data];
+                }
+            },
+            language: {
+                searchPlaceholder: 'Product Code or Name or Requested By',
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+            }
+        });
+    });
+
+    $(document).on('click', '#updateStockBtn', function() {
+        var id = $(this).val();
+        var base_url = "<?php echo base_url();?>";
+        $.ajax({
+            url: base_url + "Stockcontroller/stock_list_one/" + id,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('#updateStockModal').modal('show');
+                if (data != 0) {
+                    // transaction details data
+                    $('#sku_label').html(data.sku + ' - ' + data.product);
+                    $('input[name=stock_id]').val(data.stock_id);
+                    $('input[name=sku]').val(data.sku);
+                    $('input[name=product]').val(data.product);
+                    $('textarea[name=description]').val(data.description);
+                    $('input[name=rate]').val(data.rate);
+                    
+                } else {
+                    console.log("No record exists", "Error");
+                }
+            }
+        });
+    });
 
 } );
 </script>

@@ -13,6 +13,147 @@
                 $this->load->view('login');
             }
         } 
+
+        public function stock_list_ajax(){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->stock_list_ajax($length, $start, $search);
+            $query_all = $this->stock_model->stock_list_ajax_count();
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    // regular access
+                    $json[] = array(
+                        $rows['sku'],
+                        $rows['product'],
+                        $rows['description'],
+                        '<b>'.$rows['rate'].'</b>',
+                        '<b>'.$rows['threshold'].'</b>',
+                        $rows['unit'],
+                        $rows['amount'],
+                       '<button type="button" class="viewbtn btn btn-success" value="'. $rows['stock_id'] .'" id="updateStockBtn"><i class="fas fa-plus"></i></button>'.
+                       '<button type="button" class="viewbtn btn btn-info" value="'. $rows['stock_id'] .'" id="historyBtn"><i class="fas fa-list"></i></button>'.
+                       '<a href="edit/'. $rows['stock_id'] .'" class="btn btn-primary"><i class="fa fa-edit" title="Edit"></i></a>'.
+                       '<a class="btn btn-danger" onclick="return confirm('."'Press OK to confirm delete stock?'".')" href="delete/'. $rows['stock_id'] .'" title="Delete"><i class="fa fa-trash"></i></a>'
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
+
+        public function wish_list_ajax(){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->wish_list_ajax($length, $start, $search);
+            $query_all = $this->stock_model->wish_list_ajax_count();
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    // regular access
+                    $json[] = array(
+                        $rows['sku'],
+                        $rows['product'],
+                        $rows['rate'] .' - '.$rows['unit'],
+                        $rows['wish']
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
+
+        public function history_list_ajax($id){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->history_list_ajax($id, $length, $start, $search);
+            $query_all = $this->stock_model->history_list_ajax_count($id);
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    // regular access
+                    $json[] = array(
+                        $rows['timestamp'],
+                        $rows['division'],
+                        $rows['product'],
+                        $rows['quantity'],
+                        $rows['activity'],
+                        $rows['remarks']
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
+
+        public function stock_list_one($id){
+            $data['stockListOne'] =  $this->stock_model->list_one($id);
+            echo json_encode($data['stockListOne']);        
+        }
+        
             
         public function add(){
             if(isset($_SESSION['fullname'])){

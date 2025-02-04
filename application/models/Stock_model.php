@@ -4,6 +4,69 @@ class Stock_model extends CI_Model{
         $this->load->database();
     }
 
+    public function stock_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * 
+                                    FROM stock 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%') OR 
+                                        description LIKE CONCAT('%$search%')
+                                    )
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+
+    public function stock_list_ajax_count(){
+        $query = $this->db->query("SELECT * 
+                                    FROM stock 
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function wish_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * 
+                                    FROM stock 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%') OR 
+                                        wish LIKE CONCAT('%$search%')
+                                    )
+                                    AND wish != ''
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+
+    public function wish_list_ajax_count(){
+        $query = $this->db->query("SELECT * 
+                                    FROM stock 
+                                    where wish != ''
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function history_list_ajax($id, $length, $start, $search){
+        $query = $this->db->query("SELECT a.*, b.sku, b.product
+                                    FROM stock_txn a left join stock b on a.stock_id = b.stock_id
+                                    WHERE 
+                                    (
+                                        a.division LIKE CONCAT('%$search%') OR 
+                                        b.sku LIKE CONCAT('%$search%') OR 
+                                        b.product LIKE CONCAT('%$search%')
+                                    ) AND a.stock_id = $id
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+
+    public function history_list_ajax_count($id){
+        $query = $this->db->query("SELECT a.*, b.sku, b.product
+                                    FROM stock_txn a left join stock b on a.stock_id = b.stock_id
+                                    WHERE a.stock_id = $id
+                                    ");
+        return $query->num_rows();
+    }
+
     public function create(){
         $data = array(
             'sku' => $this->input->post('sku'),
