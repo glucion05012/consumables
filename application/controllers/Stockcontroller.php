@@ -241,6 +241,48 @@
                 echo json_encode($response);
             }
         }
+
+        public function ris_list_ajax(){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->ris_list_ajax($length, $start, $search);
+            $query_all = $this->stock_model->ris_list_ajax_count();
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    // regular access
+                    $json[] = array(
+                        $rows['ris_no'],
+                        $rows['timestamp'],
+                        $rows['status'],
+                        '<button type="button" class="viewbtn btn btn-info" value="'.$rows['ris_no'].'" id="historyBtn"><i class="fas fa-list"></i></button>'
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
         
 
         public function stock_list_one($id){

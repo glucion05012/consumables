@@ -104,6 +104,25 @@ class Stock_model extends CI_Model{
                                     ");
         return $query->num_rows();
     }
+
+    
+    public function ris_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        ris_no LIKE CONCAT('%$search%') OR 
+                                        status LIKE CONCAT('%$search%')
+                                    )
+                                    GROUP BY ris_no
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+
+    public function ris_list_ajax_count(){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    GROUP BY ris_no");
+        return $query->num_rows();
+    }
     
     public function create(){
         $data = array(
