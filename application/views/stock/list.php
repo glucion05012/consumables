@@ -63,6 +63,7 @@
             <thead>
                 <tr>
                     <th>Product Code</th>
+                    <th>ENGAS ID</th>
                     <th>Name of Product</th>
                     <th>Description</th>
                     <th>No of Stocks</th>
@@ -221,6 +222,13 @@
                             <div class="col-sm-8">
                                 <input type="number"  class="form-control" name="updated_stock" required>
                             </div>
+                            <div class="col-sm-4" >
+                                <p><b>Amount: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="updated_amount" required>
+                            </div>
+
 
                             </div>
                             <div class="center-button" style="margin-top:3rem;">

@@ -11,7 +11,8 @@ class Stock_model extends CI_Model{
                                     (
                                         sku LIKE CONCAT('%$search%') OR 
                                         product LIKE CONCAT('%$search%') OR 
-                                        description LIKE CONCAT('%$search%')
+                                        description LIKE CONCAT('%$search%')OR 
+                                        engas_id LIKE CONCAT('%$search%')
                                     )
                                     LIMIT $start, $length");
         return $query->result_array();
@@ -70,6 +71,7 @@ class Stock_model extends CI_Model{
     public function create(){
         $data = array(
             'sku' => $this->input->post('sku'),
+            'engas_id' => $this->input->post('engas_id'),
             'product' => $this->input->post('product'),
             'description' => $this->input->post('description'),
             'rate' => $this->input->post('rate'),
@@ -86,6 +88,7 @@ class Stock_model extends CI_Model{
         $date_log = date('F j, Y g:i:a  ');
         $logs = array(
             'stock_id' => $stock_id,
+            'amount' => $this->input->post('amount'),
             'user_id' => $_SESSION['user_id'],
             'division' => $_SESSION['division'],
             'quantity' => $this->input->post('rate'),
@@ -116,6 +119,7 @@ class Stock_model extends CI_Model{
     public function update_stock($id){
         $data = array(
             'product' => $this->input->post('product'),
+            'engas_id' => $this->input->post('engas_id'),
             'description' => $this->input->post('description'),
             'amount' => $this->input->post('amount'),
             'unit' => $this->input->post('unit'),
@@ -131,6 +135,7 @@ class Stock_model extends CI_Model{
         $date_log = date('F j, Y g:i:a  ');
         $logs = array(
             'stock_id' => $id,
+            'amount' => $this->input->post('amount'),
             'user_id' => $_SESSION['user_id'],
             'division' => $_SESSION['division'],
             'timestamp' => $date_log,
@@ -179,6 +184,7 @@ class Stock_model extends CI_Model{
             'user_id' => $_SESSION['user_id'],
             'division' => $_SESSION['division'],
             'quantity' => $this->input->post('updated_stock'),
+            'amount' => $this->input->post('updated_amount'),
             'timestamp' => $date_log,
             'activity' => 'Add Quantity',
             'remarks' => 'New count: '.$updatedrate,

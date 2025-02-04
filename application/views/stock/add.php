@@ -20,6 +20,13 @@
                     </div>
 
                     <div class="col-sm-4" >
+                        <p><b>ENGAS ID: </b></p> 
+                    </div> 
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="engas_id" required>
+                    </div>
+
+                    <div class="col-sm-4" >
                         <p><b>Name of Product: </b></p> 
                     </div> 
                     <div class="col-sm-8">

@@ -31,6 +31,7 @@
                     // regular access
                     $json[] = array(
                         $rows['sku'],
+                        $rows['engas_id'],
                         $rows['product'],
                         $rows['description'],
                         '<b>'.$rows['rate'].'</b>',
