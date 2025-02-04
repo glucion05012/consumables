@@ -68,6 +68,43 @@ class Stock_model extends CI_Model{
         return $query->num_rows();
     }
 
+    
+    public function approve_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        requested_by LIKE CONCAT('%$search%') OR 
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'Requested'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function approve_list_ajax_count(){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'Requested'
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function for_delivery_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        requested_by LIKE CONCAT('%$search%') OR 
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'For Delivery'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function for_delivery_list_ajax_count(){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'For Delivery'
+                                    ");
+        return $query->num_rows();
+    }
+    
     public function create(){
         $data = array(
             'sku' => $this->input->post('sku'),

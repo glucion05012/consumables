@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <table id="myTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
+        <table id="myTableApproveList" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
             <thead>
                 <tr>
                     <th>RIS No.</th>
@@ -69,21 +69,6 @@
                 </tr>
             </thead>
             <tbody>
-                
-                <?php foreach($itemTempRequested as $cl) : ?>
-                        <tr class="table-active"> 
-                            <td><?php echo $cl['ris_no']; ?></td>
-                            <td><?php echo $cl['sku']; ?></td>
-                            <td><?php echo $cl['product']; ?></td>
-                            <td><?php echo $cl['description']; ?></td>
-                            <td><b><?php echo $cl['count']; ?></b></td>
-                            <td><?php echo $cl['timestamp']; ?></td>
-                            <td><?php echo $cl['requested_by']; ?></td>
-                            <td>
-                                <button type="submit" id="forDeliveryBtn-<?php echo $cl['request_temp_id'];?>" value='<?php echo $cl['request_temp_id'];?>' class="btn btn-success" >For Delivery</button>
-                            </td>
-                        </tr>   
-                <?php endforeach; ?>
             </tbody>
         </table>
 
@@ -92,7 +77,6 @@
 </div>
 
        
-
         <!-- MODAL FOR DELIVERY -->
         <div id="requestModalPendingForDelivery" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -106,30 +90,20 @@
                 <!-- Modal body -->
                 <div class="modal-body" style="align-self:center;">  
 
-                    <table id="cartTable" class="table table-striped table-bordered table-sm align">
-                        <tr>
-                            <th>RIS No.</th>
-                            <th>SKU</th>
-                            <th>Product</th>
-                            <th>Count</th>
-                            <th>Date Requested</th>
-                            <th>Requested By</th>
-                            <th>Status</th>
-                        </tr>
-
-                        <?php foreach($itemTempForDelivery as $ht) : ?>
+                    <table id="forDeliveryTable" class="table table-striped table-bordered table-sm align">
+                        <thead>
                             <tr>
-                                <td><?php echo $ht['ris_no'];?></td>
-                                <td><?php echo $ht['sku'];?></td>
-                                <td><?php echo $ht['product'];?> - <?php echo $ht['description'];?></td>
-                                <td><?php echo $ht['count'];?></td>
-                                <td><?php echo $ht['timestamp'];?></td>
-                                <td><?php echo $ht['requested_by'];?></td>
-                                <td><?php echo $ht['status'];?></td>
-                                
+                                <th>RIS No.</th>
+                                <th>SKU</th>
+                                <th>Product</th>
+                                <th>Count</th>
+                                <th>Date Requested</th>
+                                <th>Requested By</th>
+                                <th>Status</th>
                             </tr>
-                        <?php endforeach; ?>
-
+                        </thead>
+                        <tbody>
+                        </tbody>
                     </table>   
                 </div>
 
@@ -144,67 +118,6 @@
         </div>
         <!-- END MODAL FOR DELIVERY -->
 
-        <!-- MODAL FOR ADD ITEM -->
-        <?php foreach($stockList as $plu) : ?>
-        <div id="addItemModal-<?php echo $plu['stock_id'];?>" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Item</h4>
-                    <h5><?php echo $plu['sku'];?> - <?php echo $plu['product'];?></h5>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body" style="align-self:center;">  
-                <form action="<?= base_url('stockcontroller/addItem'); ?>" method="post" accept-charset="utf-8">
-                    <div class="form-group" style="padding: 2rem" >
-                        <div class="form-group-create-sm" style="padding: 1rem; border:2px black solid;">
-                            <h3><?php echo $plu['product'];?></h3>
-                            <h5><?php echo $plu['description'];?></h5><br><br>
-                            <p>Remaining: <?php echo $plu['rate'];?></p>
-                        
-                            <div class="row">
-
-                                <input type="hidden" name="stock_id" value='<?php echo $plu['stock_id'];?>'>
-                                <input type="hidden" name="sku" value='<?php echo $plu['sku'];?>'>
-                                <input type="hidden" name="product" value='<?php echo $plu['product'];?>'>
-                                <input type="hidden" name="description" value='<?php echo $plu['description'];?>'>
-                                <input type="hidden" name="rate" value='<?php echo $plu['rate'];?>'>
-                                <input type="hidden" name="amount" value='<?php echo $plu['amount'];?>'>
-
-                                <div class="col-sm-4" >
-                                    <p><b>Count: </b></p> 
-                                </div> 
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="addCnt" id="addCnt" required>
-                                </div>
-
-                            
-
-                            </div>
-                            <div class="center-button" style="margin-top:3rem;">
-                                <button type="submit" class="btn btn-success" >Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </form> 
-                    
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
-                </div>
-
-                </div>
-            </div>
-        </div>
-        <?php endforeach; ?>
-        <!-- END MODAL FOR ADD ITEM -->
-
-        
 
         
 
@@ -238,37 +151,95 @@ $(document).ready(function() {
         
     } );
 
+
+    var base_url = "<?php echo base_url();?>";
+    $('#myTableApproveList').DataTable({
+        'pageLength': 10,
+        'serverSide': true,
+        'processing': true,
+        'ordering': false,
+        "bDestroy": true,
+        'order': [],
+        'ajax': {
+            url : base_url+'Stockcontroller/approve_list_ajax/',
+            type : 'POST',
+            dataSrc: function(json) {
+                console.log(json);
+                if (json && Array.isArray(json.data)) {
+                    if (json.data.length === 0) {
+                        $('.dataTables_processing').hide();
+                        $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                        return [];
+                    }
+                    return json.data;
+                }
+                return [json.data];
+            }
+        },
+        language: {
+            searchPlaceholder: 'Search Product Code or Name or Description',
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+        }
+    });
+
+    $('#forDeliveryTable').DataTable({
+        'pageLength': 10,
+        'serverSide': true,
+        'processing': true,
+        'ordering': false,
+        "bDestroy": true,
+        'order': [],
+        'ajax': {
+            url : base_url+'Stockcontroller/for_delivery_list_ajax/',
+            type : 'POST',
+            dataSrc: function(json) {
+                console.log(json);
+                if (json && Array.isArray(json.data)) {
+                    if (json.data.length === 0) {
+                        $('.dataTables_processing').hide();
+                        $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                        return [];
+                    }
+                    return json.data;
+                }
+                return [json.data];
+            }
+        },
+        language: {
+            searchPlaceholder: 'Search Product Code or Name or Description',
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+        }
+    });
 } );
          
          
 //  ----------------------- forDeliveryBtn button -----------------------
-<?php foreach($itemTempRequested as $cl) : ?>
-    $(document).on('click', '#forDeliveryBtn-<?php echo $cl['request_temp_id'];?>', function(){ 
-        var cntrel = window.prompt("Count of Stock to release.", <?php echo $cl['count']; ?>);
-        if (confirm('Are you sure you want to proceed for delivery?')) {
-            var request_temp_id = $(this).val();
-//           alert(cntrel);
-            var base_url = <?php echo json_encode(base_url()); ?>;
-            $.ajax({
-                data : {request_temp_id : request_temp_id,
-                       cntrel : cntrel}
-                , type: "POST"
-                , url: base_url + "Stockcontroller/itemTempToForDelivery"
-                , crossOrigin: false
-                , success: function(res) {
-                    alert('Successfully updated for delivery.');
+
+$(document).on('click', '#forDeliveryBtn', function(){ 
+    var request_temp_id = $(this).data("var1");
+    var cnt = $(this).data("var2");
+    var cntrel = window.prompt("Count of Stock to release.", cnt);
+    if (confirm('Are you sure you want to proceed for delivery?')) {
+        var base_url = <?php echo json_encode(base_url()); ?>;
+        $.ajax({
+            data : {request_temp_id : request_temp_id,
+                    cntrel : cntrel}
+            , type: "POST"
+            , url: base_url + "Stockcontroller/itemTempToForDelivery"
+            , crossOrigin: false
+            , success: function(res) {
+                alert('Successfully updated for delivery.');
+                location.reload();
+            }, 
+            error: function(err) {
+                alert( 'Insufficient Stocks!');
                     location.reload();
-                }, 
-                error: function(err) {
-                    alert( 'Insufficient Stocks!');
-                     location.reload();
-                }
-            });
-            location.reload();
-        }
-        location.reload();            
-    });
-<?php endforeach; ?>
+            }
+        });
+        location.reload();
+    }
+    location.reload();            
+});
     
 </script>
 
