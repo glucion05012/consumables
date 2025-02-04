@@ -229,6 +229,16 @@
                                 <input type="text" class="form-control" name="updated_amount" required>
                             </div>
 
+                            <div class="col-sm-4" >
+                                <p><b>Old Stock: </b></p> 
+                            </div> 
+                            <div class="col-sm-8">
+                                <select name="old" required>
+                                    <option selected value="no">no</option>
+                                    <option value="yes">yes</option>
+                                </select>
+                            </div>
+
 
                             </div>
                             <div class="center-button" style="margin-top:3rem;">
@@ -364,7 +374,7 @@ $(document).ready(function() {
                 }
             },
             language: {
-                searchPlaceholder: 'Product Code or Name or Requested By',
+                searchPlaceholder: 'Product Code or Division or SKU',
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
             }
         });

@@ -68,6 +68,16 @@
                         <input type="number" class="form-control" name="threshold">
                     </div>
 
+                    <div class="col-sm-4" >
+                        <p><b>Old Stock: </b></p> 
+                    </div> 
+                    <div class="col-sm-8">
+                        <select name="old" required>
+                            <option selected value="no">no</option>
+                            <option value="yes">yes</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div class="center-button" style="margin-top:3rem;">
                     <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm Add Stock?')">Create</button>

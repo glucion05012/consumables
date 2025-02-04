@@ -77,7 +77,7 @@ class Stock_model extends CI_Model{
             'rate' => $this->input->post('rate'),
             'unit' => $this->input->post('unit'),
             'threshold' => $this->input->post('threshold'),
-            'amount' => $this->input->post('amount'),
+            'amount' => $this->input->post('amount')
         );
         
         $this->db->insert('stock', $data);
@@ -94,6 +94,7 @@ class Stock_model extends CI_Model{
             'quantity' => $this->input->post('rate'),
             'timestamp' => $date_log,
             'activity' => 'Stock In ',
+            'old' => $this->input->post('old'),
             'remarks' => 'Product added: ' . $this->input->post('product'),
         );
 
@@ -187,6 +188,7 @@ class Stock_model extends CI_Model{
             'amount' => $this->input->post('updated_amount'),
             'timestamp' => $date_log,
             'activity' => 'Add Quantity',
+            'old' => $this->input->post('old'),
             'remarks' => 'New count: '.$updatedrate,
         );
 

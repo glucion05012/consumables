@@ -127,7 +127,7 @@
                         $rows['product'],
                         $rows['quantity'],
                         $rows['activity'],
-                        $rows['remarks']
+                        $rows['remarks'].' <br> <b>Old Unit: <i>'.$rows['old'].'</i></b>'
                     );
                    
                 }
