@@ -306,7 +306,7 @@ $(document).ready(function() {
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
             },
             "rowCallback": function( row, data, index ) {
-                if ( data[3] >= data[4] ){
+                if ( parseInt(data[4]) <= parseInt(data[5]) ){
                     $('td', row).css('background-color', '#FAA0A0');
                 }
             }

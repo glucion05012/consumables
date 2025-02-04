@@ -125,38 +125,17 @@
             </div>
         </div>
 
-        <table id="myTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
+        <table id="requestTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
             <thead>
                 <tr>
                     <th>Product Code</th>
                     <th>Name of Product</th>
                     <th>No of Stocks</th>
+                    <th>Threshold</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($stockList as $cl) : ?>
-                    <?php if(intval($cl['rate']) <= intval($cl['threshold'])){
-                        echo '<tr class="table-active" style="background-color: #FFCCCB"> ';
-                    }else{
-                        echo '<tr class="table-active"> ';
-                    }  ?>
-                        <td><?php echo $cl['sku']; ?></td>
-                        <td><?php echo $cl['product']; ?></td>
-                        <td><b><?php echo $cl['rate']; ?></b></td>
-                        <td>
-                            <?php if(intval($cl['rate']) <= intval($cl['threshold'])) : ?>
-                                    <button class='btn btn-danger' disabled>Insufficient Stock</button>
-                                    <?php if($cl['wish'] == "") : ?>
-                                        <a class='btn btn-primary'  onclick="return confirm('Press OK to confirm wish for stock?')" href='wish/<?php echo $cl['stock_id']; ?>' title="Add to Wish List"><i class="nav-icon fa fa-star"></i></a>
-                                    <?php endif; ?>
-                                <?php else : ?>
-                                <a class='btn btn-success' href='' data-toggle='modal' data-target='#addItemModal-<?php echo $cl['stock_id']; ?>' value='<?php echo $cl['stock_id']; ?>' title="Add to Cart">+</a>
-                            <?php endif; ?>
-                            
-                        </td>
-                    </tr>   
-                <?php endforeach; ?>
             </tbody>
         </table>
 
@@ -269,8 +248,6 @@
             </div>
         </div>
         <!-- END MODAL FOR REQUEST PENDING -->
-
-        
 
         <!-- MODAL FOR REQUEST ACCEPT -->
         <div id="requestModalForAcceptance" class="modal fade" role="dialog">
@@ -471,6 +448,41 @@ $(document).ready(function() {
         
     } );
 
+    
+    var base_url = "<?php echo base_url();?>";
+        $('#requestTable').DataTable({
+            'pageLength': 10,
+            'serverSide': true,
+            'processing': true,
+            'ordering': false,
+            "bDestroy": true,
+            'order': [],
+            'ajax': {
+                url : base_url+'Stockcontroller/request_list_ajax/',
+                type : 'POST',
+                dataSrc: function(json) {
+                    console.log(json);
+                    if (json && Array.isArray(json.data)) {
+                        if (json.data.length === 0) {
+                            $('.dataTables_processing').hide();
+                            $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                            return [];
+                        }
+                        return json.data;
+                    }
+                    return [json.data];
+                }
+            },
+            language: {
+                searchPlaceholder: 'Search Product Code or Name',
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+            },
+            "rowCallback": function( row, data, index ) {
+                if ( parseInt(data[2]) <= parseInt(data[3]) ){
+                    $('td', row).css('background-color', '#FAA0A0');
+                }
+            }
+        });
 } );
     
     <?php foreach($itemTemp as $ht) : ?>

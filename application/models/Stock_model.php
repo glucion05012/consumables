@@ -123,6 +123,23 @@ class Stock_model extends CI_Model{
                                     GROUP BY ris_no");
         return $query->num_rows();
     }
+
+    public function request_list_ajax($length, $start, $search){
+        $query = $this->db->query("SELECT * FROM stock 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    )
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+
+    public function request_list_ajax_count(){
+        $query = $this->db->query("SELECT * FROM stock 
+                                    ");
+        return $query->num_rows();
+    }
     
     public function create(){
         $data = array(

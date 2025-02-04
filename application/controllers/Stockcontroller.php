@@ -34,8 +34,8 @@
                         $rows['engas_id'],
                         $rows['product'],
                         $rows['description'],
-                        '<b>'.$rows['rate'].'</b>',
-                        '<b>'.$rows['threshold'].'</b>',
+                        $rows['rate'],
+                        $rows['threshold'],
                         $rows['unit'],
                         $rows['amount'],
                        '<button type="button" class="viewbtn btn btn-success" value="'. $rows['stock_id'] .'" id="updateStockBtn"><i class="fas fa-plus"></i></button>'.
@@ -262,6 +262,65 @@
                         $rows['timestamp'],
                         $rows['status'],
                         '<button type="button" class="viewbtn btn btn-info" value="'.$rows['ris_no'].'" id="historyBtn"><i class="fas fa-list"></i></button>'
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
+
+        public function request_list_ajax(){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->request_list_ajax($length, $start, $search);
+            $query_all = $this->stock_model->request_list_ajax_count();
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    //action button
+                    if(intval($rows['rate']) <= intval($rows['threshold'])){
+                        $action_btn = '<button class="btn btn-danger" disabled>Insufficient Stock</button>';
+                        $action_btn2 = '';
+                        $action_btn3 = '';
+                        if($rows['wish'] == ''){
+                            $action_btn2 = '<a class="btn btn-primary"  onclick="return confirm('."'Press OK to confirm wish for stock?'".')" href="wish/'.$rows['stock_id'].'" title="Add to Wish List"><i class="nav-icon fa fa-star"></i></a>';
+                        }
+                    }else{
+                            $action_btn3 = '<a class="btn btn-success" href="" data-toggle="modal" data-target="#addItemModal" value="'.$rows['stock_id'].'" title="Add to Cart">+</a>';
+                            $action_btn2 = '';
+                            $action_btn = '';
+                    }
+                    //action button end
+
+
+                    // regular access
+                    $json[] = array(
+                        $rows['sku'],
+                        $rows['product'],
+                        $rows['rate'],
+                        $rows['threshold'],
+                        $action_btn.$action_btn2.$action_btn3
                     );
                    
                 }
