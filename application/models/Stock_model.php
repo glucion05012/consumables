@@ -157,6 +157,57 @@ class Stock_model extends CI_Model{
                                     ");
         return $query->num_rows();
     }
+
+    public function pending_requested_list_ajax($div_id, $length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'Requested' AND requested_by = '$div_id'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function pending_requested_list_ajax_count($div_id){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'Requested' AND requested_by = '$div_id'
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function acceptance_list_ajax($div_id, $length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'For Delivery' AND requested_by = '$div_id'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function acceptance_list_ajax_count($div_id){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'For Delivery' AND requested_by = '$div_id'
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function completed_list_ajax($div_id, $length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'Completed' AND requested_by = '$div_id'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function completed_list_ajax_count($div_id){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'Completed' AND requested_by = '$div_id'
+                                    ");
+        return $query->num_rows();
+    }
     
     public function create(){
         $data = array(
