@@ -27,15 +27,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Cart</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php 
-                                        $cnt = 0;
-                                        foreach($itemTemp as $at){
-                                            if($at['requested_by'] == $_SESSION['division']){
-                                                $cnt += 1;
-                                            }
-                                        }
-                                        echo $cnt;
-                                    ?></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="card_cart"></div>
                                 </div>
                                 <div class="col-auto">
                                 <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
@@ -53,15 +45,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php 
-                                        $cnt = 0;
-                                        foreach($itemTempRequested as $at){
-                                            if($at['requested_by'] == $_SESSION['division']){
-                                                $cnt += 1;
-                                            }
-                                        }
-                                        echo $cnt;
-                                    ?></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="card_pending_requests"></div>
                                 </div>
                                 <div class="col-auto">
                                 <i class="fas fa-clock fa-2x text-gray-300"></i>
@@ -79,15 +63,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">For Acceptance</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php 
-                                        $cnt = 0;
-                                        foreach($itemTempForDelivery as $at){
-                                            if($at['requested_by'] == $_SESSION['division']){
-                                                $cnt += 1;
-                                            }
-                                        }
-                                        echo $cnt;
-                                    ?></div>    
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="card_for_acceptance"></div>    
                                 </div>
                                 <div class="col-auto">
                                 <i class="fas fa-thumbs-up fa-2x text-gray-300"></i>
@@ -105,15 +81,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php 
-                                        $cnt = 0;
-                                        foreach($itemTempCompleted as $at){
-                                            if($at['requested_by'] == $_SESSION['division']){
-                                                $cnt += 1;
-                                            }
-                                        }
-                                        echo $cnt;
-                                    ?></div>      
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="card_completed"></div>      
                                 </div>
                                 <div class="col-auto">
                                 <i class="fas fa-check fa-2x text-gray-300"></i>
@@ -507,6 +475,7 @@ $(document).ready(function() {
                         $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
                         return [];
                     }
+                    $('#card_cart').html(json.data.length);
                     return json.data;
                 }
                 return [json.data];
@@ -536,6 +505,7 @@ $(document).ready(function() {
                         $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
                         return [];
                     }
+                    $('#card_pending_requests').html(json.data.length);
                     return json.data;
                 }
                 return [json.data];
@@ -565,6 +535,7 @@ $(document).ready(function() {
                         $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
                         return [];
                     }
+                    $('#card_for_acceptance').html(json.data.length);
                     return json.data;
                 }
                 return [json.data];
@@ -594,6 +565,7 @@ $(document).ready(function() {
                         $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
                         return [];
                     }
+                    $('#card_completed').html(json.data.length);
                     return json.data;
                 }
                 return [json.data];
