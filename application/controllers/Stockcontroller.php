@@ -304,7 +304,7 @@
                         $action_btn2 = '';
                         $action_btn3 = '';
                         if($rows['wish'] == ''){
-                            $action_btn2 = '<a class="btn btn-primary"  onclick="return confirm('."'Press OK to confirm wish for stock?'".')" href="wish/'.$rows['stock_id'].'" title="Add to Wish List"><i class="nav-icon fa fa-star"></i></a>';
+                            $action_btn2 = '<button type="button" class="btn btn-primary" value="'. $rows['stock_id'] .'" id="wishBtn"><i class="nav-icon fa fa-star"></i></button>';
                         }
                     }else{
                             $action_btn3 = '<a class="btn btn-success" href="" data-toggle="modal" data-target="#addItemModal" value="'.$rows['stock_id'].'" title="Add to Cart">+</a>';
@@ -573,8 +573,7 @@
         public function wish($id){
             $this->stock_model->wish($id);
             $this->session->set_flashdata('successmsg', 'Stock successfully added to wishlist!');
-            $url = $_SERVER['HTTP_REFERER'];
-            redirect($url);
+            return;
         }
         
 

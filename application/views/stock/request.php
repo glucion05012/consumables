@@ -483,6 +483,26 @@ $(document).ready(function() {
                 }
             }
         });
+
+        $(document).on('click', '#wishBtn', function(){ 
+            if (confirm('Are you sure you want to wish for stock?')) {
+                var id = $(this).val();
+                var base_url = <?php echo json_encode(base_url()); ?>;
+                
+                $.ajax({
+                    type: "POST"
+                    , url: base_url + "Stockcontroller/wish/"+id
+                    , dataType: 'json'
+                    , crossOrigin: false
+                    , success: function(res) {
+                        location.reload();
+                    }, 
+                    error: function(err) {
+                        location.reload();
+                    }
+                });
+            }
+        });
 } );
     
     <?php foreach($itemTemp as $ht) : ?>
