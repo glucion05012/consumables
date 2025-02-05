@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>DENR - NCR Consumables Inventory System</title>
+  <title>DENR - NCR CAMS</title>
   <link rel="icon" href="<?php echo base_url() . "assets/"; ?>denr-emb-logo.gif" type="image/x-icon">
 
   <!-- Font Awesome Icons -->
@@ -85,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="info">
-            <a href="<?php echo base_url(); ?>dashboard" class="nav-link" class="d-block">DENR-NCR-CIS</a>
+            <a href="<?php echo base_url(); ?>dashboard" class="nav-link" class="d-block">Consumables Asset Management System</a>
           </div>
         </div>
 
