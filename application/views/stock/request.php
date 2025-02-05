@@ -355,15 +355,14 @@
         <!-- END MODAL FOR REQUEST COMPLETED -->
 
         <!-- MODAL FOR ADD ITEM -->
-        <?php foreach($stockList as $plu) : ?>
-        <div id="addItemModal-<?php echo $plu['stock_id'];?>" class="modal fade" role="dialog">
+        <div id="addItemModal" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Add Item</h4>
-                    <h5><?php echo $plu['sku'];?> - <?php echo $plu['product'];?></h5>
+                    <h5><p id = "skulabel"></p><p id = "productlabel2"></p></h5>
                 </div>
 
                 <!-- Modal body -->
@@ -371,18 +370,18 @@
                 <form action="<?= base_url('stockcontroller/addItem'); ?>" method="post" accept-charset="utf-8">
                     <div class="form-group" style="padding: 2rem" >
                         <div class="form-group-create-sm" style="padding: 1rem; border:2px black solid;">
-                            <h3><?php echo $plu['product'];?></h3>
-                            <h5><?php echo $plu['description'];?></h5><br><br>
-                            <p>Remaining: <?php echo $plu['rate'];?></p>
+                            <h3 id="productlabel"></h3>
+                            <h5 id="desclabel"></h5><br><br>
+                            <p>Remaining: <p id ="ratelabel"></p></p>
                         
                             <div class="row">
 
-                                <input type="hidden" name="stock_id" value='<?php echo $plu['stock_id'];?>'>
-                                <input type="hidden" name="sku" value='<?php echo $plu['sku'];?>'>
-                                <input type="hidden" name="product" value='<?php echo $plu['product'];?>'>
-                                <input type="hidden" name="description" value='<?php echo $plu['description'];?>'>
-                                <input type="hidden" name="rate" value='<?php echo $plu['rate'];?>'>
-                                <input type="hidden" name="amount" value='<?php echo $plu['amount'];?>'>
+                                <input type="hidden" name="stock_id" >
+                                <input type="hidden" name="sku" >
+                                <input type="hidden" name="product" >
+                                <input type="hidden" name="description" >
+                                <input type="hidden" name="rate" >
+                                <input type="hidden" name="amount" >
 
                                 <div class="col-sm-4" >
                                     <p><b>Count: </b></p> 
@@ -411,7 +410,6 @@
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
         <!-- END MODAL FOR ADD ITEM -->
 
         
@@ -450,59 +448,90 @@ $(document).ready(function() {
 
     
     var base_url = "<?php echo base_url();?>";
-        $('#requestTable').DataTable({
-            'pageLength': 10,
-            'serverSide': true,
-            'processing': true,
-            'ordering': false,
-            "bDestroy": true,
-            'order': [],
-            'ajax': {
-                url : base_url+'Stockcontroller/request_list_ajax/',
-                type : 'POST',
-                dataSrc: function(json) {
-                    console.log(json);
-                    if (json && Array.isArray(json.data)) {
-                        if (json.data.length === 0) {
-                            $('.dataTables_processing').hide();
-                            $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
-                            return [];
-                        }
-                        return json.data;
+    $('#requestTable').DataTable({
+        'pageLength': 10,
+        'serverSide': true,
+        'processing': true,
+        'ordering': false,
+        "bDestroy": true,
+        'order': [],
+        'ajax': {
+            url : base_url+'Stockcontroller/request_list_ajax/',
+            type : 'POST',
+            dataSrc: function(json) {
+                console.log(json);
+                if (json && Array.isArray(json.data)) {
+                    if (json.data.length === 0) {
+                        $('.dataTables_processing').hide();
+                        $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                        return [];
                     }
-                    return [json.data];
+                    return json.data;
                 }
-            },
-            language: {
-                searchPlaceholder: 'Search Product Code or Name',
-                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
-            },
-            "rowCallback": function( row, data, index ) {
-                if ( parseInt(data[2]) <= parseInt(data[3]) ){
-                    $('td', row).css('background-color', '#FAA0A0');
-                }
+                return [json.data];
             }
-        });
+        },
+        language: {
+            searchPlaceholder: 'Search Product Code or Name',
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+        },
+        "rowCallback": function( row, data, index ) {
+            if ( parseInt(data[2]) <= parseInt(data[3]) ){
+                $('td', row).css('background-color', '#FAA0A0');
+            }
+        }
+    });
 
-        $(document).on('click', '#wishBtn', function(){ 
-            if (confirm('Are you sure you want to wish for stock?')) {
-                var id = $(this).val();
-                var base_url = <?php echo json_encode(base_url()); ?>;
-                
-                $.ajax({
-                    type: "POST"
-                    , url: base_url + "Stockcontroller/wish/"+id
-                    , dataType: 'json'
-                    , crossOrigin: false
-                    , success: function(res) {
-                        location.reload();
-                    }, 
-                    error: function(err) {
-                        location.reload();
-                    }
-                });
+    $(document).on('click', '#wishBtn', function(){ 
+        if (confirm('Are you sure you want to wish for stock?')) {
+            var id = $(this).val();
+            var base_url = <?php echo json_encode(base_url()); ?>;
+            
+            $.ajax({
+                type: "POST"
+                , url: base_url + "Stockcontroller/wish/"+id
+                , dataType: 'json'
+                , crossOrigin: false
+                , success: function(res) {
+                    location.reload();
+                }, 
+                error: function(err) {
+                    location.reload();
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '#addBtn', function() {
+        $('#addItemModal').modal('show');
+        var id = $(this).val();
+        var base_url = "<?php echo base_url();?>";
+        $.ajax({
+            url: base_url + "Stockcontroller/stock_list_one/" + id,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('#addItemModal').modal('show');
+                if (data != 0) {
+                    // transaction details data
+                    $('input[name=stock_id]').val(data.stock_id);
+                    $('input[name=sku]').val(data.sku);
+                    $('input[name=product]').val(data.product);
+                    $('input[name=description]').val(data.description);
+                    $('input[name=rate]').val(data.rate);
+                    $('input[name=amount]').val(data.amount);
+                    $('#productlabel').html(data.product);
+                    $('#productlabel2').html(data.product);
+                    $('#desclabel').html(data.description);
+                    $('#ratelabel').html(data.rate);
+                    $('#skulabel').html(data.sku);
+                    
+                } else {
+                    console.log("No record exists", "Error");
+                }
             }
         });
+    });
 } );
     
     <?php foreach($itemTemp as $ht) : ?>

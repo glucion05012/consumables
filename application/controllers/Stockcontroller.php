@@ -307,7 +307,7 @@
                             $action_btn2 = '<button type="button" class="btn btn-primary" value="'. $rows['stock_id'] .'" id="wishBtn"><i class="nav-icon fa fa-star"></i></button>';
                         }
                     }else{
-                            $action_btn3 = '<a class="btn btn-success" href="" data-toggle="modal" data-target="#addItemModal" value="'.$rows['stock_id'].'" title="Add to Cart">+</a>';
+                            $action_btn3 = '<button type="button" class="btn btn-success" value="'. $rows['stock_id'] .'" id="addBtn"><i class="nav-icon fa fa-plus"></i></button>';
                             $action_btn2 = '';
                             $action_btn = '';
                     }
