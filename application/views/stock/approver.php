@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <table id="myTableApproveList" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
+        <table id="myTableRequestList" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
             <thead>
                 <tr>
                     <th>RIS No.</th>
@@ -153,7 +153,7 @@ $(document).ready(function() {
 
 
     var base_url = "<?php echo base_url();?>";
-    $('#myTableApproveList').DataTable({
+    $('#myTableRequestList').DataTable({
         'pageLength': 10,
         'serverSide': true,
         'processing': true,
@@ -161,7 +161,7 @@ $(document).ready(function() {
         "bDestroy": true,
         'order': [],
         'ajax': {
-            url : base_url+'Stockcontroller/approve_list_ajax/',
+            url : base_url+'Stockcontroller/requested_list_ajax/',
             type : 'POST',
             dataSrc: function(json) {
                 console.log(json);

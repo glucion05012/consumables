@@ -151,7 +151,7 @@
         }
 
         
-        public function approve_list_ajax(){
+        public function requested_list_ajax(){
             $draw = intval($this->input->post("draw"));
             $start = intval($this->input->post("start"));
             $length = intval($this->input->post("length"));
@@ -159,8 +159,8 @@
             $search = $this->input->post('search');
             $search = $search['value'];
 
-            $query =  $this->stock_model->approve_list_ajax($length, $start, $search);
-            $query_all = $this->stock_model->approve_list_ajax_count();
+            $query =  $this->stock_model->requested_list_ajax($length, $start, $search);
+            $query_all = $this->stock_model->requested_list_ajax_count();
 
             if($query_all > 0){
                 foreach($query as $rows){
@@ -196,6 +196,7 @@
                 echo json_encode($response);
             }
         }
+        
 
         public function for_delivery_list_ajax(){
             $draw = intval($this->input->post("draw"));
@@ -321,6 +322,53 @@
                         $rows['rate'],
                         $rows['threshold'],
                         $action_btn.$action_btn2.$action_btn3
+                    );
+                   
+                }
+                $total_records = $query_all;
+                $response = array(
+                    'draw'  => $draw,
+                    'recordsTotal' => $total_records,
+                    'recordsFiltered' => $total_records,
+                    'data' => $json ?: []
+                );
+                
+                echo json_encode($response);
+            }else{
+                $response = array();
+                $response['sEcho'] = 0;
+                $response['iTotalRecords'] = 0;
+                $response['iTotalDisplayRecords'] = 0;
+                $response['data'] = [];
+                echo json_encode($response);
+            }
+        }
+
+        
+
+        public function pending_list_ajax(){
+            $draw = intval($this->input->post("draw"));
+            $start = intval($this->input->post("start"));
+            $length = intval($this->input->post("length"));
+            $div_id = $_SESSION['division'];
+            $json = array();
+            $search = $this->input->post('search');
+            $search = $search['value'];
+
+            $query =  $this->stock_model->pending_list_ajax($div_id, $length, $start, $search);
+            $query_all = $this->stock_model->pending_list_ajax_count($div_id);
+
+            if($query_all > 0){
+                foreach($query as $rows){
+
+                    // regular access
+                    $json[] = array(
+                        $rows['sku'],
+                        $rows['product'] .' - '.$rows['description'],
+                        '<b>'.$rows['count'].'</b>',
+                        $rows['timestamp'],
+                        $rows['status'],
+                       '<button type="button" class="viewbtn btn btn-danger" value="'. $rows['request_temp_id'] .'" id="removestock">-</button>'
                     );
                    
                 }

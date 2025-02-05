@@ -69,7 +69,7 @@ class Stock_model extends CI_Model{
     }
 
     
-    public function approve_list_ajax($length, $start, $search){
+    public function requested_list_ajax($length, $start, $search){
         $query = $this->db->query("SELECT * FROM requeststocktemp 
                                     WHERE 
                                     (
@@ -80,7 +80,7 @@ class Stock_model extends CI_Model{
                                     LIMIT $start, $length");
         return $query->result_array();
     }
-    public function approve_list_ajax_count(){
+    public function requested_list_ajax_count(){
         $query = $this->db->query("SELECT * FROM requeststocktemp 
                                     WHERE status = 'Requested'
                                     ");
@@ -137,6 +137,23 @@ class Stock_model extends CI_Model{
 
     public function request_list_ajax_count(){
         $query = $this->db->query("SELECT * FROM stock 
+                                    ");
+        return $query->num_rows();
+    }
+
+    public function pending_list_ajax($div_id, $length, $start, $search){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE 
+                                    (
+                                        sku LIKE CONCAT('%$search%') OR 
+                                        product LIKE CONCAT('%$search%')
+                                    ) AND status = 'Pending' AND requested_by = '$div_id'
+                                    LIMIT $start, $length");
+        return $query->result_array();
+    }
+    public function pending_list_ajax_count($div_id){
+        $query = $this->db->query("SELECT * FROM requeststocktemp 
+                                    WHERE status = 'Pending' AND requested_by = '$div_id'
                                     ");
         return $query->num_rows();
     }

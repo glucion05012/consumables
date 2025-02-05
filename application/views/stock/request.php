@@ -156,29 +156,18 @@
                     <form action="<?= base_url('stockcontroller/addItemRequested'); ?>" method="post" accept-charset="utf-8">
 
                         <table id="cartTable" class="table table-striped table-bordered table-sm align">
-                            <tr>
-                                <th>Product Code</th>
-                                <th>Name of Product</th>
-                                <th>No of Stocks</th>
-                                <th>Date Requested</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-
-                            <?php foreach($itemTemp as $ht) : ?>
-                                <?php if($_SESSION['division'] == $ht['requested_by']) : ?>
-                                    <tr>
-                                        <td><?php echo $ht['sku'];?></td>
-                                        <td><?php echo $ht['product'];?> - <?php echo $ht['description'];?></td>
-                                        <td><?php echo $ht['count'];?></td>
-                                        <td><?php echo $ht['timestamp'];?></td>
-                                        <td><?php echo $ht['status'];?></td>
-                                        <td><a class='btn btn-danger' href='' id='removestock-<?php echo $ht['request_temp_id']; ?>' value='<?php echo $ht['request_temp_id']; ?>' title="Remove">-</a></td>
-                                        
-                                    </tr>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-
+                            <thead>    
+                                <tr>
+                                    <th>Product Code</th>
+                                    <th>Name of Product</th>
+                                    <th>No of Stocks</th>
+                                    <th>Date Requested</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
                         </table>
                         <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm request of stock?')">Request</button>
                     </form>    
@@ -209,7 +198,7 @@
                 <div class="modal-body" style="align-self:center;">  
                     <form action="<?= base_url('stockcontroller/addItemRequestedCancel'); ?>" method="post" accept-charset="utf-8">
 
-                        <table id="cartTable" class="table table-striped table-bordered table-sm align">
+                        <table id="pendingTable" class="table table-striped table-bordered table-sm align">
                             <tr>
                                 <th>RIS No.</th>
                                 <th>Product Code</th>
@@ -263,7 +252,7 @@
                 <div class="modal-body" style="align-self:center;">  
                     <form action="<?= base_url('stockcontroller/addItemRequestedAccept'); ?>" method="post" accept-charset="utf-8">
 
-                        <table id="cartTable" class="table table-striped table-bordered table-sm align">
+                        <table id="acceptanceTable" class="table table-striped table-bordered table-sm align">
                             <tr>
                                 <th>RIS No.</th>
                                 <th>Product Code</th>
@@ -316,7 +305,7 @@
                 <!-- Modal body -->
                 <div class="modal-body" style="align-self:center;">  
                     
-                        <table id="cartTable" class="table table-striped table-bordered table-sm align">
+                        <table id="completedTable" class="table table-striped table-bordered table-sm align">
                             <tr>
                                 <th>RIS No.</th>
                                 <th>Product Code</th>
@@ -532,34 +521,56 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#cartTable').DataTable({
+        'pageLength': 10,
+        'serverSide': true,
+        'processing': true,
+        'ordering': false,
+        "bDestroy": true,
+        'order': [],
+        'ajax': {
+            url : base_url+'Stockcontroller/pending_list_ajax/',
+            type : 'POST',
+            dataSrc: function(json) {
+                console.log(json);
+                if (json && Array.isArray(json.data)) {
+                    if (json.data.length === 0) {
+                        $('.dataTables_processing').hide();
+                        $('#myTableInboxList tbody').html('<tr><td colspan="100%" class="text-center">No records found</td></tr>');
+                        return [];
+                    }
+                    return json.data;
+                }
+                return [json.data];
+            }
+        },
+        language: {
+            searchPlaceholder: 'Product Code or Name',
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
+        }
+    });
 } );
     
-    <?php foreach($itemTemp as $ht) : ?>
-        <?php if($_SESSION['division'] == $ht['requested_by']) : ?>
-            $(document).on('click', '#removestock-<?php echo $ht['request_temp_id']; ?>', function(){ 
-//                alert(<?php echo $ht['request_temp_id']; ?>);
-                if (confirm('Are you sure you want to remove stock?')) {
-                var tempid =<?php echo $ht['request_temp_id']; ?>;
-                var base_url = <?php echo json_encode(base_url()); ?>;
-            
-                $.ajax({
-                    data : {tempid : tempid}
-                    , type: "POST"
-                    , url: base_url + "Stockcontroller/removeItemRequested"
-                    , dataType: 'json'
-                    , crossOrigin: false
-                    , success: function(res) {
-                       
-
-                         location.reload();
-                    }, 
-                    error: function(err) {
-                        alert(err);
-                    }
-                });
+    $(document).on('click', '#removestock', function(){ 
+        if (confirm('Are you sure you want to remove stock?')) {
+        var tempid = $(this).val();
+        var base_url = <?php echo json_encode(base_url()); ?>;
+    
+        $.ajax({
+            data : {tempid : tempid}
+            , type: "POST"
+            , url: base_url + "Stockcontroller/removeItemRequested"
+            , dataType: 'json'
+            , crossOrigin: false
+            , success: function(res) {
+                    location.reload();
+            }, 
+            error: function(err) {
+                location.reload();
             }
-            });
-        <?php endif; ?>
-    <?php endforeach; ?>
+        });
+    }
+    });
 </script>
 
