@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 02:27 PM
+-- Generation Time: Feb 05, 2025 at 08:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -57,13 +57,15 @@ INSERT INTO `requeststocktemp` (`request_temp_id`, `ris_no`, `stock_id`, `divisi
 (9, '2025-02-004', '8', NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '3.67', '9', 'AD-GSS', 'February 4, 2025 4:59:pm  ', 'For Delivery'),
 (10, '2025-02-004', '9', NULL, 'PPMU-2023-09', 'Clearbook, A4 size', 'Clearbook, A4 size', '39.78', '1', 'AD-GSS', 'February 4, 2025 5:00:pm  ', 'Requested'),
 (11, '2025-02-005', '106', NULL, 'PPMU-2023-109', 'USB hub, 2.0 HUB support 500GB, 4-ports (EMED-WAQMS)', 'USB hub, 2.0 HUB support 500GB, 4-ports (EMED-WAQMS)', '200', '6', 'AD-GSS', 'February 4, 2025 5:03:pm  ', 'For Delivery'),
-(12, NULL, '156', NULL, '123109-3029374982367498-2', 'jbl speaker', 'small size', '3000', '2', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(13, NULL, '8', NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '3.67', '10', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(14, NULL, '9', NULL, 'PPMU-2023-09', 'Clearbook, A4 size', 'Clearbook, A4 size', '39.78', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(15, NULL, '111', NULL, 'PPMU-2023-114', 'Electric fan, industrial ground type (8-13-2021)', 'Electric fan, industrial ground type (8-13-2021)', '1,109.68', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(16, NULL, '111', NULL, 'PPMU-2023-114', 'Electric fan, industrial ground type (8-13-2021)', 'Electric fan, industrial ground type (8-13-2021)', '1,109.68', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(17, NULL, '118', NULL, 'PPMU-2023-121', 'File Folder w/ tab Legal', 'File Folder w/ tab Legal', '3.5', '40', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Pending'),
-(18, NULL, '120', NULL, 'PPMU-2023-123', 'Polaris PVC (instant id System)', 'Polaris PVC (instant id System)', '86.72', '50', 'AD-GSS', 'February 4, 2025 5:55:pm  ', 'Pending');
+(12, '2025-02-006', '156', NULL, '123109-3029374982367498-2', 'jbl speaker', 'small size', '3000', '2', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(13, '2025-02-006', '8', NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '3.67', '10', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(14, '2025-02-006', '9', NULL, 'PPMU-2023-09', 'Clearbook, A4 size', 'Clearbook, A4 size', '39.78', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(15, '2025-02-006', '111', NULL, 'PPMU-2023-114', 'Electric fan, industrial ground type (8-13-2021)', 'Electric fan, industrial ground type (8-13-2021)', '1,109.68', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(16, '2025-02-006', '111', NULL, 'PPMU-2023-114', 'Electric fan, industrial ground type (8-13-2021)', 'Electric fan, industrial ground type (8-13-2021)', '1,109.68', '1', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(17, '2025-02-006', '118', NULL, 'PPMU-2023-121', 'File Folder w/ tab Legal', 'File Folder w/ tab Legal', '3.5', '40', 'AD-GSS', 'February 4, 2025 5:54:pm  ', 'Requested'),
+(18, '2025-02-006', '120', NULL, 'PPMU-2023-123', 'Polaris PVC (instant id System)', 'Polaris PVC (instant id System)', '86.72', '50', 'AD-GSS', 'February 4, 2025 5:55:pm  ', 'Requested'),
+(22, NULL, '8', NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '3.67', '10', 'AD-GSS', 'February 5, 2025 2:51:pm  ', 'Pending'),
+(23, NULL, '12', NULL, 'PPMU-2023-12', 'Computer continuous form, 3 ply, 280 x 378mm PREMIERE', 'Computer continuous form, 3 ply, 280 x 378mm PREMIERE', '1,508.00', '1', 'AD-GSS', 'February 5, 2025 2:51:pm  ', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -89,21 +91,21 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`stock_id`, `engas_id`, `sku`, `product`, `description`, `rate`, `unit`, `threshold`, `amount`, `wish`) VALUES
-(4, NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '5', 'ream', '10', '1000.30', ''),
+(4, NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '5', 'ream', '10', '1000.30', 'AD-GSS'),
 (5, NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '10', 'ream', '10', '1200', ''),
-(6, NULL, 'PPMU-2023-06', 'Carbon film, A4 size', 'Carbon film, A4 size', '9', 'pack', '10', '221', ''),
+(6, NULL, 'PPMU-2023-06', 'Carbon film, A4 size', 'Carbon film, A4 size', '9', 'pack', '10', '221', 'AD-GSS'),
 (7, NULL, 'PPMU-2023-07', 'Card case, A3, 115 x 92mm', 'Card case, A3, 115 x 92mm', '2', 'pc', '1', '6.25', ''),
 (8, NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '510', 'pc', '50', '3.67', ''),
 (9, NULL, 'PPMU-2023-09', 'Clearbook, A4 size', 'Clearbook, A4 size', '6', 'pc', '5', '39.78', ''),
 (10, NULL, 'PPMU-2023-10', 'Clearbook, Legal size', 'Clearbook, Legal size', '5', 'pc', '5', '42.38', ''),
 (11, NULL, 'PPMU-2023-11', 'Computer continuous form, 3 ply, 11 x 14.88 ADVANCE COMPUTER FORMS, INC.', 'Computer continuous form, 3 ply, 11 x 14.88 ADVANCE COMPUTER FORMS, INC.', '3', 'box', '2', '1034.80', ''),
 (12, NULL, 'PPMU-2023-12', 'Computer continuous form, 3 ply, 280 x 378mm PREMIERE', 'Computer continuous form, 3 ply, 280 x 378mm PREMIERE', '3', 'box', '1', '1,508.00', ''),
-(13, NULL, 'PPMU-2023-13', 'Correction tape, 4.5m', 'Correction tape, 4.5m', '0', 'pc', '2', '330', 'ORD - Legal Unit'),
+(13, NULL, 'PPMU-2023-13', 'Correction tape, 4.5m', 'Correction tape, 4.5m', '0', 'pc', '2', '330', 'AD-GSS'),
 (14, NULL, 'PPMU-2023-14', 'Envelope brown, A4 size', 'Envelope brown, A4 size', '77', 'pc', '10', '6850', ''),
-(15, NULL, 'PPMU-2023-15', 'Envelope brown, Legal size, expanding, kraftboard', 'Envelope brown, Legal size, expanding, kraftboard', '6', 'pc', '10', '0', 'EMED - SWMS'),
+(15, NULL, 'PPMU-2023-15', 'Envelope brown, Legal size, expanding, kraftboard', 'Envelope brown, Legal size, expanding, kraftboard', '6', 'pc', '10', '0', 'AD-GSS'),
 (16, NULL, 'PPMU-2023-16', 'Envelope brown, Legal size', 'Envelope brown, Legal size', '1254', 'pc', '100', '0', ''),
 (17, NULL, 'PPMU-2023-17', 'Envelope expanding, plastic', 'Envelope expanding, plastic', '2', 'pc', '2', '650', ''),
-(18, NULL, 'PPMU-2023-18', 'Envelope mailing long, 105mm x 241mm, 70GSM, 500 pcs.', 'Envelope mailing long, 105mm x 241mm, 70GSM, 500 pcs.', '2', 'box', '10', '200', 'ORD - Legal Unit'),
+(18, NULL, 'PPMU-2023-18', 'Envelope mailing long, 105mm x 241mm, 70GSM, 500 pcs.', 'Envelope mailing long, 105mm x 241mm, 70GSM, 500 pcs.', '2', 'box', '10', '200', 'AD-GSS'),
 (19, NULL, 'PPMU-2023-19', 'Envelope mailing with DENR letterhead, 500/box (window type)', 'Envelope mailing with DENR letterhead, 500/box (window type)', '17499', 'pc', '100', '1600', ''),
 (20, NULL, 'PPMU-2023-20', 'Envelopes pay golden kraft, 4 x 7 1/2, 75gsm, 500 pcs.', 'Envelopes pay golden kraft, 4 x 7 1/2, 75gsm, 500 pcs.', '1000', 'pc', '10', '1600', ''),
 (21, NULL, 'PPMU-2023-21', 'Eraser, blackboard/whiteboard', 'Eraser, blackboard/whiteboard', '1', 'pc', '1', '1700', ''),
@@ -415,7 +417,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `requeststocktemp`
 --
 ALTER TABLE `requeststocktemp`
-  MODIFY `request_temp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `request_temp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `stock`
