@@ -137,6 +137,8 @@
                             <tbody>
                             </tbody>
                         </table>
+                        <textarea name="purpose" rows="4" cols="50" class="form-control" placeholder="Please enter your purpose or request." required></textarea>
+                        <br>
                         <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm request of stock?')">Request</button>
                     </form>    
                 </div>
@@ -159,7 +161,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Pending Request for Stock</h4>
+                    <h4 class="modal-title">Pending Request for Stock <span id="purposelabel"></span></h4>
                 </div>
 
                 <!-- Modal body -->

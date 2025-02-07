@@ -393,6 +393,7 @@ class Stock_model extends CI_Model{
         $data = array(
             'status' => 'Requested',
             'ris_no' => $risno,
+            'purpose' => $this->input->post('purpose'),
         );
         
         $this->db->where('status', 'Pending');

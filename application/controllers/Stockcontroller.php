@@ -174,6 +174,7 @@
                         '<b>'.$rows['count'].'</b>',
                         $rows['timestamp'],
                         $rows['requested_by'],
+                        $rows['purpose'],
                        '<button type="button" class="viewbtn btn btn-success" data-var1="'.$rows['request_temp_id'].'" data-var2="'.$rows['count'].'" id="forDeliveryBtn">For Delivery</button>'
                     );
                    

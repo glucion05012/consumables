@@ -65,6 +65,7 @@
                     <th>No Of Stocks</th>
                     <th>Date Requested</th>
                     <th>Requested By</th>
+                    <th>Purpose</th>
                     <th>Action</th>
                 </tr>
             </thead>
