@@ -62,7 +62,7 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">For Acceptance</div>
+                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">For Pick-up</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" id="card_for_acceptance"></div>    
                                 </div>
                                 <div class="col-auto">
@@ -91,6 +91,10 @@
                     </a>
                 </div>
             </div>
+        </div>
+
+        <div style="margin: 20px">
+            <a href="" id="wish_not_list">Item not in the list?</a>
         </div>
 
         <table id="requestTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
@@ -600,5 +604,10 @@ $(document).ready(function() {
         });
     }
     });
+
+    $(document).on('click', '#wish_not_list', function(){ 
+        $('#wishNotModal').modal('show');
+    });
+    
 </script>
 
