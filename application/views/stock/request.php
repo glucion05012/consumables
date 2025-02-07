@@ -406,57 +406,6 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '#wishBtn', function(){ 
-        if (confirm('Are you sure you want to wish for stock?')) {
-            var id = $(this).val();
-            var base_url = <?php echo json_encode(base_url()); ?>;
-            
-            $.ajax({
-                type: "POST"
-                , url: base_url + "Stockcontroller/wish/"+id
-                , dataType: 'json'
-                , crossOrigin: false
-                , success: function(res) {
-                    location.reload();
-                }, 
-                error: function(err) {
-                    location.reload();
-                }
-            });
-        }
-    });
-
-    $(document).on('click', '#addBtn', function() {
-        $('#addItemModal').modal('show');
-        var id = $(this).val();
-        var base_url = "<?php echo base_url();?>";
-        $.ajax({
-            url: base_url + "Stockcontroller/stock_list_one/" + id,
-            method: 'POST',
-            dataType: 'JSON',
-            success: function(data) {
-                $('#addItemModal').modal('show');
-                if (data != 0) {
-                    // transaction details data
-                    $('input[name=stock_id]').val(data.stock_id);
-                    $('input[name=sku]').val(data.sku);
-                    $('input[name=product]').val(data.product);
-                    $('input[name=description]').val(data.description);
-                    $('input[name=rate]').val(data.rate);
-                    $('input[name=amount]').val(data.amount);
-                    $('#productlabel').html(data.product);
-                    $('#productlabel2').html(data.product);
-                    $('#desclabel').html(data.description);
-                    $('#ratelabel').html(data.rate);
-                    $('#skulabel').html(data.sku);
-                    
-                } else {
-                    console.log("No record exists", "Error");
-                }
-            }
-        });
-    });
-
     $('#cartTable').DataTable({
         'pageLength': 10,
         'serverSide': true,
@@ -578,6 +527,57 @@ $(document).ready(function() {
     });
 } );
     
+    $(document).on('click', '#wishBtn', function(){ 
+        if (confirm('Are you sure you want to wish for stock?')) {
+            var id = $(this).val();
+            var base_url = <?php echo json_encode(base_url()); ?>;
+           
+            $.ajax({
+                type: "POST"
+                , url: base_url + "wish/"+id
+                , dataType: 'json'
+                , crossOrigin: false
+                , success: function(res) {
+                    location.reload();
+                }, 
+                error: function(err) {
+                    location.reload();
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '#addBtn', function() {
+        $('#addItemModal').modal('show');
+        var id = $(this).val();
+        var base_url = "<?php echo base_url();?>";
+        $.ajax({
+            url: base_url + "Stockcontroller/stock_list_one/" + id,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('#addItemModal').modal('show');
+                if (data != 0) {
+                    // transaction details data
+                    $('input[name=stock_id]').val(data.stock_id);
+                    $('input[name=sku]').val(data.sku);
+                    $('input[name=product]').val(data.product);
+                    $('input[name=description]').val(data.description);
+                    $('input[name=rate]').val(data.rate);
+                    $('input[name=amount]').val(data.amount);
+                    $('#productlabel').html(data.product);
+                    $('#productlabel2').html(data.product);
+                    $('#desclabel').html(data.description);
+                    $('#ratelabel').html(data.rate);
+                    $('#skulabel').html(data.sku);
+                    
+                } else {
+                    console.log("No record exists", "Error");
+                }
+            }
+        });
+    });
+
     $(document).on('click', '#removestock', function(){ 
         if (confirm('Are you sure you want to remove stock?')) {
         var tempid = $(this).val();

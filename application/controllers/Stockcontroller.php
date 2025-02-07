@@ -618,6 +618,7 @@
         public function update_restock(){
             if(isset($_SESSION['fullname'])){
                 $this->stock_model->update_restock();
+                $this->stock_model->check_wish();
                 $this->session->set_flashdata('successmsg', 'Stock successfully added!');
                 
                 $url = $_SERVER['HTTP_REFERER'];
@@ -755,7 +756,8 @@
         public function wish($id){
             $this->stock_model->wish($id);
             $this->session->set_flashdata('successmsg', 'Stock successfully added to wishlist!');
-            return;
+            $url = $_SERVER['HTTP_REFERER'];
+            redirect($url); 
         }
         
 

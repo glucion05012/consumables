@@ -414,6 +414,7 @@ class Stock_model extends CI_Model{
         );
 
         $this->db->where('requested_by', $_SESSION['division']);
+        $this->db->where('status', 'Requested');
         return $this->db->update('requeststocktemp', $data);
     }
 
@@ -505,7 +506,7 @@ class Stock_model extends CI_Model{
     public function check_wish(){
         $query = $this->db->get('stock');
         foreach($query->result_array() as $row){
-            if($row['rate'] >= $row['threshold']){
+            if($row['rate'] > $row['threshold']){
                 $data = array(
                     'wish' => '',
                 );

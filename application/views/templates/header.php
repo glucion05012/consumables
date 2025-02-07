@@ -111,7 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
             </li>
 
-            <?php if ($_SESSION['division'] == 'AD-GSS') : ?>
+            <?php if ($_SESSION['division'] == 'AD-PS') : ?>
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-archive"></i>
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             <?php endif; ?>
 
-            <?php if ($_SESSION['division'] == 'AD-GSS') : ?>
+            <?php if ($_SESSION['division'] == 'AD-PS') : ?>
               <li class="nav-item">
                 <a href="<?php echo base_url(); ?>approver" class="nav-link">
                   <i class="nav-icon fa fa-user"></i>
