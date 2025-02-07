@@ -319,8 +319,8 @@
                     $json[] = array(
                         $rows['sku'],
                         $rows['product'],
-                        $rows['rate'],
-                        $rows['threshold'],
+                        $rows['rate'].' '.$rows['unit'],
+                        $rows['threshold'].' '.$rows['unit'],
                         $action_btn.$action_btn2.$action_btn3
                     );
                    
