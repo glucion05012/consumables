@@ -94,7 +94,7 @@
         </div>
 
         <div style="margin: 20px">
-            <a href="" id="wish_not_list">Item not in the list?</a>
+            <a href="#" id="wish_not_list">Item not in the list?</a>
         </div>
 
         <table id="requestTable" class="table table-responsive table-striped table-bordered table-sm" cellspacing="0" width="100%" >
@@ -342,8 +342,66 @@
         </div>
         <!-- END MODAL FOR ADD ITEM -->
 
-        
+        <!-- MODAL FOR ADD ITEM NOT IN LIST -->
+        <div id="wishNotModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Item not in the list</h4>
+                    <h5><p id = "skulabel"></p><p id = "productlabel2"></p></h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="align-self:center;">  
+                <form action="<?= base_url('stockcontroller/addItemNotList'); ?>" method="post" accept-charset="utf-8">
+                    <div class="form-group" style="padding: 2rem" >
+                        <div class="form-group-create-sm" style="padding: 1rem; border:2px black solid;">
+                        
+                            <div class="row">
+                                <div class="col-sm-4" >
+                                    <p><b>Name of Product: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="product_name" required>
+                                </div>
+
+                                <div class="col-sm-4" >
+                                    <p><b>Description: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                <textarea name="product_description" rows="4" cols="50" class="form-control" placeholder="Please enter description of youru requested product." required></textarea>
+                                </div>
+
+                                <div class="col-sm-4" >
+                                    <p><b>Remarks: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                <textarea name="remarks" rows="4" cols="50" class="form-control" required></textarea>
+                                </div>
+                            
+
+                            </div>
+                            <div class="center-button" style="margin-top:3rem;">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm request?')">Add to wishlist</button>
+                            </div>
+                        </div>
+                    </div>
+                </form> 
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL ITEM NOT IN LIST -->
+        
         
 
 <script>

@@ -532,7 +532,18 @@
             echo json_encode($data['stockListOne']);        
         }
         
-            
+        public function addItemNotList(){
+            if(isset($_SESSION['fullname'])){
+                $this->stock_model->addItemNotList();
+                $this->session->set_flashdata('successmsg', 'Stock successfully added to wishlist!');
+                
+                $url = $_SERVER['HTTP_REFERER'];
+                redirect($url);    
+            }else{
+                $this->load->view('login');
+            }
+        }
+        
         public function add(){
             if(isset($_SESSION['fullname'])){
                 $this->form_validation->set_rules('sku', 'SKU',

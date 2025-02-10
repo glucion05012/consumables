@@ -516,6 +516,21 @@ class Stock_model extends CI_Model{
             }
         }
     }
+
+    public function addItemNotList(){
+        date_default_timezone_set('Asia/Manila');
+        $date_log = date('F j, Y g:i:a  ');
+        $logs = array(
+            'product_name' => $this->input->post('product_name'),
+            'product_description' => $this->input->post('product_description'),
+            'requested_by' => $_SESSION['division'],
+            'date_requested' => $date_log,
+            'remarks' => $this->input->post('remarks'),
+            'status' => 'Pending',
+        );
+
+        return $this->db->insert('wishlist', $logs);
+    }
     
     
 }
