@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2025 at 09:25 AM
+-- Generation Time: Feb 11, 2025 at 03:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -117,11 +117,11 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`stock_id`, `engas_id`, `sku`, `product`, `description`, `rate`, `unit`, `threshold`, `amount`, `wish`) VALUES
 (1, NULL, 'PPMU-2023-01', 'Official Receipt', 'Official Receipt', '52', 'book', '50', '100', ''),
-(2, NULL, 'PPMU-2023-02', 'Battery AAA Eveready', 'Battery AAA Eveready', '2', 'pc', '2', '19.7', 'ORED-RSCIG'),
+(2, NULL, 'PPMU-2023-02', 'Battery AAA Eveready', 'Battery AAA Eveready', '2', 'pc', '2', '19.7', ''),
 (3, NULL, 'PPMU-2023-03', 'Binder clips, 19mm', 'Binder clips, 19mm', '4', 'box', '3', '8.76', ''),
-(4, NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '10', 'ream', '10', '1000', 'AD-PS'),
+(4, NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '11', 'ream', '10', '1000', ''),
 (5, NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '80', 'ream', '10', '1200', ''),
-(6, NULL, 'PPMU-2023-06', 'Carbon film, A4 size', 'Carbon film, A4 size', '100', 'pack', '100', '221', 'AD-PS'),
+(6, NULL, 'PPMU-2023-06', 'Carbon film, A4 size', 'Carbon film, A4 size', '100', 'pack', '100', '221', ''),
 (7, NULL, 'PPMU-2023-07', 'Card case, A3, 115 x 92mm', 'Card case, A3, 115 x 92mm', '1', 'pc', '1', '5', 'AD-PS'),
 (8, NULL, 'PPMU-2023-08', 'Cartolina, assorted colors', 'Cartolina, assorted colors', '1', 'pc', '50', '3.67', 'FD-BUDGET'),
 (9, NULL, 'PPMU-2023-09', 'Clearbook, A4 size', 'Clearbook, A4 size', '5', 'pc', '5', '39.78', 'COA-COA'),
@@ -331,7 +331,8 @@ INSERT INTO `stock_txn` (`stock_txn_id`, `user_id`, `stock_id`, `amount`, `divis
 (87, '6', '50', NULL, 'FD-BUDGET', '2', 'February 7, 2025 10:08:am  ', 'Stock Out', 'New count: 207<br> RIS No.: 2025-02-028', NULL),
 (88, '6', '1', NULL, 'COA-COA', '3', 'February 7, 2025 10:34:am  ', 'Stock Out', 'New count: 52<br> RIS No.: 2025-02-029', NULL),
 (89, '6', '4', NULL, 'AD-PS', '12', 'February 7, 2025 11:23:am  ', 'Stock Out', 'New count: 10<br> RIS No.: 2025-02-030', NULL),
-(90, '6', '5', NULL, 'AD-PS', '9', 'February 7, 2025 11:23:am  ', 'Stock Out', 'New count: 80<br> RIS No.: 2025-02-030', NULL);
+(90, '6', '5', NULL, 'AD-PS', '9', 'February 7, 2025 11:23:am  ', 'Stock Out', 'New count: 80<br> RIS No.: 2025-02-030', NULL),
+(91, '6', '4', '100', 'AD-PS', '1', 'February 11, 2025 10:15:am  ', 'Add Quantity', 'New count: 11', 'no');
 
 -- --------------------------------------------------------
 
@@ -435,7 +436,9 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`id`, `stock_id`, `product_name`, `product_description`, `requested_by`, `date_requested`, `remarks`, `status`) VALUES
-(1, NULL, 'Alcohol', '50ml Ethyl Alcohol', 'AD-PS', 'February 10, 2025 4:24:pm  ', 'Needed for tree planting activity', 'Pending');
+(1, NULL, 'Alcohol', '50ml Ethyl Alcohol', 'AD-PS', 'February 10, 2025 4:24:pm  ', 'Needed for tree planting activity', 'Pending'),
+(2, '4', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', 'AD-PS', 'February 11, 2025 10:10:am  ', 'pahinge', 'Completed'),
+(3, '7', 'Card case, A3, 115 x 92mm', 'Card case, A3, 115 x 92mm', 'AD-PS', 'February 11, 2025 10:16:am  ', 'needed', 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -492,7 +495,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `stock_txn`
 --
 ALTER TABLE `stock_txn`
-  MODIFY `stock_txn_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `stock_txn_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -504,7 +507,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
