@@ -80,10 +80,10 @@
 
                     // regular access
                     $json[] = array(
-                        $rows['sku'],
-                        $rows['product'],
-                        $rows['rate'] .' - '.$rows['unit'],
-                        $rows['wish']
+                        $rows['product_name'],
+                        $rows['date_requested'],
+                        $rows['remarks'],
+                        $rows['requested_by']
                     );
                    
                 }
@@ -543,6 +543,19 @@
                 $this->load->view('login');
             }
         }
+
+        public function addWishList(){
+            if(isset($_SESSION['fullname'])){
+                $this->stock_model->addWishList();
+                $this->session->set_flashdata('successmsg', 'Stock successfully added to wishlist!');
+                
+                $url = $_SERVER['HTTP_REFERER'];
+                redirect($url);    
+            }else{
+                $this->load->view('login');
+            }
+        }
+        
         
         public function add(){
             if(isset($_SESSION['fullname'])){

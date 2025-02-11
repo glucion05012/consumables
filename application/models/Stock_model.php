@@ -27,22 +27,22 @@ class Stock_model extends CI_Model{
 
     public function wish_list_ajax($length, $start, $search){
         $query = $this->db->query("SELECT * 
-                                    FROM stock 
+                                    FROM wishlist 
                                     WHERE 
                                     (
-                                        sku LIKE CONCAT('%$search%') OR 
-                                        product LIKE CONCAT('%$search%') OR 
-                                        wish LIKE CONCAT('%$search%')
+                                        remarks LIKE CONCAT('%$search%') OR 
+                                        product_name LIKE CONCAT('%$search%') OR 
+                                        requested_by LIKE CONCAT('%$search%')
                                     )
-                                    AND wish != ''
+                                    AND status='Pending'
                                     LIMIT $start, $length");
         return $query->result_array();
     }
 
     public function wish_list_ajax_count(){
         $query = $this->db->query("SELECT * 
-                                    FROM stock 
-                                    where wish != ''
+                                    FROM wishlist 
+                                    where status='Pending'
                                     ");
         return $query->num_rows();
     }
@@ -495,13 +495,27 @@ class Stock_model extends CI_Model{
          return $query->result_array();
      }
     
-     public function wish($id){
+     public function addWishList(){
         $data = array(
             'wish' => $_SESSION['division'],
         );
 
-        $this->db->where('stock_id', $id);
-        return $this->db->update('stock', $data);
+        $this->db->where('stock_id', $this->input->post('stock_id'));
+        $this->db->update('stock', $data);
+
+        date_default_timezone_set('Asia/Manila');
+        $date_log = date('F j, Y g:i:a  ');
+        $logs = array(
+            'stock_id' => $this->input->post('stock_id'),
+            'product_name' => $this->input->post('product_name'),
+            'product_description' => $this->input->post('product_description'),
+            'requested_by' => $_SESSION['division'],
+            'date_requested' => $date_log,
+            'remarks' => $this->input->post('remarks'),
+            'status' => 'Pending',
+        );
+
+        return $this->db->insert('wishlist', $logs);
     }
 
     public function check_wish(){
@@ -513,6 +527,12 @@ class Stock_model extends CI_Model{
                 );
                 $this->db->where('stock_id', $row['stock_id']);
                 $this->db->update('stock', $data);
+
+                $data = array(
+                    'status' => 'Completed',
+                );
+                $this->db->where('stock_id', $row['stock_id']);
+                $this->db->update('wishlist', $data);
             }
         }
     }

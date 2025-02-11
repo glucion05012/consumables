@@ -93,9 +93,9 @@
                         <table id="myTableWishList" style="width: 100% !important"class="table table-striped table-bordered table-sm align">
                             <thead>
                                 <tr>
-                                    <th>Product Code</th>
                                     <th>Name of Product</th>
-                                    <th>No of Stocks</th>
+                                    <th>Date Requested</th>
+                                    <th>Remarks</th>
                                     <th>Requested By</th>
                                 </tr>
                             </thead>

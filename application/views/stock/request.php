@@ -401,6 +401,67 @@
             </div>
         </div>
         <!-- END MODAL ITEM NOT IN LIST -->
+
+        <!-- MODAL FOR ADD WISH LIST -->
+        <div id="addWishList" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Wish List</h4>
+                    <h5><p id = "skulabelwish">as</p><p id = "productlabel2wish"></p></h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="align-self:center;">  
+                <form action="<?= base_url('stockcontroller/addWishList'); ?>" method="post" accept-charset="utf-8">
+                    <div class="form-group" style="padding: 2rem" >
+                        <div class="form-group-create-sm" style="padding: 1rem; border:2px black solid;">
+                        
+                            <div class="row">
+                                <div class="col-sm-4" >
+                                    <p><b>Name of Product: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="product_name" readonly>
+                                    <input type="hidden" class="form-control" name="stock_id" readonly>
+                                </div>
+
+                                <div class="col-sm-4" >
+                                    <p><b>Description: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                <textarea name="product_description" rows="4" cols="50" class="form-control" placeholder="Please enter description of youru requested product." readonly></textarea>
+                                </div>
+
+                                <div class="col-sm-4" >
+                                    <p><b>Remarks: </b></p> 
+                                </div> 
+                                <div class="col-sm-8">
+                                <textarea name="remarks" rows="4" cols="50" class="form-control" required></textarea>
+                                </div>
+                            
+
+                            </div>
+                            <div class="center-button" style="margin-top:3rem;">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm request?')">Add to wishlist</button>
+                            </div>
+                        </div>
+                    </div>
+                </form> 
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END MODAL WISH LIST -->
         
         
 
@@ -592,23 +653,44 @@ $(document).ready(function() {
 } );
     
     $(document).on('click', '#wishBtn', function(){ 
-        if (confirm('Are you sure you want to wish for stock?')) {
-            var id = $(this).val();
-            var base_url = <?php echo json_encode(base_url()); ?>;
-           
-            $.ajax({
-                type: "POST"
-                , url: base_url + "wish/"+id
-                , dataType: 'json'
-                , crossOrigin: false
-                , success: function(res) {
-                    location.reload();
-                }, 
-                error: function(err) {
-                    location.reload();
+        $('#addWishList').modal('show');
+        var id = $(this).val();
+        var base_url = "<?php echo base_url();?>";
+        $.ajax({
+            url: base_url + "Stockcontroller/stock_list_one/" + id,
+            method: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                if (data != 0) {
+                    // transaction details data
+                    $('input[name=stock_id]').val(data.stock_id);
+                    $('#skulabelwish').html(data.sku);
+                    $('#productlabel2wish').html(data.product);
+                    $('input[name=product_name]').val(data.product);
+                    $('textarea[name=product_description]').val(data.description);
+                    
+                } else {
+                    console.log("No record exists", "Error");
                 }
-            });
-        }
+            }
+        });
+        // if (confirm('Are you sure you want to wish for stock?')) {
+        //     var id = $(this).val();
+        //     var base_url = <?php echo json_encode(base_url()); ?>;
+           
+        //     $.ajax({
+        //         type: "POST"
+        //         , url: base_url + "wish/"+id
+        //         , dataType: 'json'
+        //         , crossOrigin: false
+        //         , success: function(res) {
+        //             location.reload();
+        //         }, 
+        //         error: function(err) {
+        //             location.reload();
+        //         }
+        //     });
+        // }
     });
 
     $(document).on('click', '#addBtn', function() {
