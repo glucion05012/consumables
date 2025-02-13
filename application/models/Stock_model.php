@@ -125,19 +125,28 @@ class Stock_model extends CI_Model{
     }
 
     public function request_list_ajax($length, $start, $search){
-        $query = $this->db->query("SELECT * FROM stock 
+        $query = $this->db->query("SELECT 
+a.*,
+b.total_count_pending
+FROM stock a
+LEFT JOIN(
+SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where status='Pending' GROUP BY stock_id) as b on a.stock_id=b.stock_id
                                     WHERE 
                                     (
-                                        sku LIKE CONCAT('%$search%') OR 
-                                        product LIKE CONCAT('%$search%')
+                                        a.sku LIKE CONCAT('%$search%') OR 
+                                        a.product LIKE CONCAT('%$search%')
                                     )
                                     LIMIT $start, $length");
         return $query->result_array();
     }
 
     public function request_list_ajax_count(){
-        $query = $this->db->query("SELECT * FROM stock 
-                                    ");
+        $query = $this->db->query("SELECT 
+a.*,
+b.total_count_pending
+FROM stock a
+LEFT JOIN(
+SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where status='Pending' GROUP BY stock_id) as b on a.stock_id=b.stock_id;");
         return $query->num_rows();
     }
 

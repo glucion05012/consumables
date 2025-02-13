@@ -301,7 +301,7 @@
                 foreach($query as $rows){
 
                     //action button
-                    if(intval($rows['rate']) <= intval($rows['threshold'])){
+                    if((intval($rows['rate'])-intval($rows['total_count_pending'])) <= intval($rows['threshold'])){
                         $action_btn = '<button class="btn btn-danger" disabled>Insufficient Stock</button>';
                         $action_btn2 = '';
                         $action_btn3 = '';
@@ -320,7 +320,7 @@
                     $json[] = array(
                         $rows['sku'],
                         $rows['product'],
-                        $rows['rate'].' '.$rows['unit'],
+                        $rows['rate']-$rows['total_count_pending'].' '.$rows['unit'],
                         $rows['threshold'].' '.$rows['unit'],
                         $action_btn.$action_btn2.$action_btn3
                     );
