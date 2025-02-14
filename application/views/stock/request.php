@@ -524,13 +524,15 @@ $(document).ready(function() {
             searchPlaceholder: 'Search Product Code or Name',
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><div class="loading-text">Loading...</div> '
         },
-        // "rowCallback": function( row, data, index ) {
-        //     if ( parseInt(data[2]-parseInt(data[3])) <= parseInt(data[4]) ){
-        //         $('td', row).css('background-color', '#FAA0A0');
-        //     }
-        // }
+        "rowCallback": function( row, data, index ) {
+            if ( parseInt(data[2]) <= parseInt(data[3]) ){
+                $('td', row).css('background-color', '#FAA0A0');
+            }
+            
+        }
     });
 
+    
     $('#cartTable').DataTable({
         'pageLength': 10,
         'serverSide': true,
