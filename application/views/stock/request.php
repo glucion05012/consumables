@@ -213,7 +213,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body" style="align-self:center;">  
-                    <form action="<?= base_url('stockcontroller/addItemRequestedAccept'); ?>" method="post" accept-charset="utf-8">
+                    <form action="<?= base_url('stockcontroller/addItemRequestedAccept'); ?>" method="post" accept-charset="utf-8" onsubmit="return validateForm()">
 
                         <table id="acceptanceTable" class="table table-striped table-bordered table-sm align">
                             <thead>
@@ -285,20 +285,20 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="rating">
-                                    <input type="radio" id="star5" name="rating" value="5" required />
+                                    <input type="radio" id="star5" name="rating" value="5"  />
                                     <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                    <input type="radio" id="star4" name="rating" value="4" required />
+                                    <input type="radio" id="star4" name="rating" value="4"  />
                                     <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                    <input type="radio" id="star3" name="rating" value="3" required />
+                                    <input type="radio" id="star3" name="rating" value="3"  />
                                     <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                    <input type="radio" id="star2" name="rating" value="2" required />
+                                    <input type="radio" id="star2" name="rating" value="2"  />
                                     <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                    <input type="radio" id="star1" name="rating" value="1" required />
+                                    <input type="radio" id="star1" name="rating" value="1"  />
                                     <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <textarea name="feedback" rows="4" cols="50" class="form-control" placeholder="Please enter your feedback to this transaction." required></textarea>
+                                <textarea name="feedback" rows="4" cols="50" class="form-control" placeholder="Please enter your feedback to this transaction." ></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm accept?')">Accept</button>
@@ -849,5 +849,41 @@ $(document).ready(function() {
             }
         });
     });
+
+    function validateForm() {
+        // Check if the table has any rows in the tbody
+        const tableBody = document.querySelector('#acceptanceTable tbody');
+        const rows = tableBody.querySelectorAll('tr');
+        
+        // If there are no rows in the table, alert the user and prevent submission
+        if (rows.length === 0) {
+            alert("Please add some items to the table before accepting.");
+            return false;  // Prevent form submission
+        }
+
+        // Validation for rating selection and feedback textarea
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        const feedback = document.querySelector('textarea[name="feedback"]').value.trim();
+
+        // Check if a rating is selected
+        if (!selectedRating) {
+            alert("Please select a rating before submitting.");
+            return false;  // Prevent form submission
+        }
+
+        // Check if feedback is provided
+        if (feedback === "") {
+            alert("Please enter your feedback.");
+            return false;  // Prevent form submission
+        }
+
+        // Show confirmation dialog before submitting the form
+        const isConfirmed = confirm("Press OK to confirm acceptance of this rating and feedback.");
+        if (!isConfirmed) {
+            return false;  // Prevent form submission if not confirmed
+        }
+
+        return true;  // Allow form submission if all conditions are met
+    }
 </script>
 
