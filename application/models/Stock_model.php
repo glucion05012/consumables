@@ -435,7 +435,18 @@ SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where s
         
         $this->db->where('status', 'For Delivery');
         $this->db->where('requested_by', $_SESSION['division']);
-        return $this->db->update('requeststocktemp', $data);
+        $this->db->update('requeststocktemp', $data);
+
+        date_default_timezone_set('Asia/Manila');
+        $date_now = date('F j, Y g:i:a  ');
+        $datar = array(
+            'rating' =>$this->input->post('rating'),
+            'remarks' =>$this->input->post('feedback'),
+            'rated_by' =>$_SESSION['division'],
+            'date_rated' =>$date_now
+        );
+        
+        return $this->db->insert('feedback', $datar);
     }
 
     public function itemTempToForDelivery(){

@@ -229,6 +229,78 @@
                             <tbody>
                             </tbody>
                         </table>
+
+                        <!-- RATING STAR -->
+                        <style>
+                            .rating {
+                                margin-top: 40px;
+                                border: none;
+                                float: left;
+                            }
+
+                            .rating > label {
+                                color: #90A0A3;
+                                float: right;
+                                cursor: pointer; /* Changes the cursor to a hand */
+                            }
+
+                            .rating > label:before {
+                                margin: 5px;
+                                font-size: 2em;
+                                font-family: FontAwesome;
+                                content: "\f005";
+                                display: inline-block;
+                            }
+
+                            .rating > input {
+                                display: none;
+                            }
+
+                            .rating > input:checked ~ label,
+                            .rating:not(:checked) > label:hover,
+                            .rating:not(:checked) > label:hover ~ label {
+                                color: #F79426;
+                            }
+
+                            .rating > input:checked + label:hover,
+                            .rating > input:checked ~ label:hover,
+                            .rating > label:hover ~ input:checked ~ label,
+                            .rating > input:checked ~ label:hover ~ label {
+                                color: #FECE31;
+                            }
+
+                            /* Styling for the title display */
+                            .rating-title {
+                                font-size: 1.2em;
+                                color: #333;
+                                margin-top: 10px;
+                                text-align: center;
+                            }
+                        </style>
+
+                        <!-- This span will display the selected title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <b>Overall Rating: <span style="color:red">*</span></b> <span class="rating-title" style="font-weight:bold; text-align:center"id="ratingTitle"></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="rating">
+                                    <input type="radio" id="star5" name="rating" value="5" required />
+                                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                    <input type="radio" id="star4" name="rating" value="4" required />
+                                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                    <input type="radio" id="star3" name="rating" value="3" required />
+                                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                    <input type="radio" id="star2" name="rating" value="2" required />
+                                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                    <input type="radio" id="star1" name="rating" value="1" required />
+                                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <textarea name="feedback" rows="4" cols="50" class="form-control" placeholder="Please enter your feedback to this transaction." required></textarea>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-success" onclick="return confirm('Press OK to confirm accept?')">Accept</button>
                     </form>    
                 </div>
@@ -751,5 +823,31 @@ $(document).ready(function() {
         $('#wishNotModal').modal('show');
     });
     
+    const ratingInputs = document.querySelectorAll('.rating input');
+    const ratingTitle = document.getElementById('ratingTitle');
+
+    // Event listener to update the rating title on change
+    ratingInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const selectedLabel = document.querySelector(`label[for='${this.id}']`);
+            const ratingValue = parseInt(this.value);  // Get the selected rating value
+
+            // Set the title text
+            ratingTitle.textContent = `${selectedLabel.getAttribute('title')}`;
+
+            // Change the text color based on the rating value
+            if (ratingValue === 1) {
+                ratingTitle.style.color = 'red';  // Bad
+            } else if (ratingValue === 2) {
+                ratingTitle.style.color = 'orange';  // Good
+            } else if (ratingValue === 3) {
+                ratingTitle.style.color = 'yellow';  // Very good
+            } else if (ratingValue === 4) {
+                ratingTitle.style.color = 'lightgreen';  // Great
+            } else if (ratingValue === 5) {
+                ratingTitle.style.color = 'green';  // Awesome
+            }
+        });
+    });
 </script>
 

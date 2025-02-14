@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 03:28 AM
+-- Generation Time: Feb 14, 2025 at 08:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `consumables`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(20) NOT NULL,
+  `rating` varchar(200) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `rated_by` varchar(200) DEFAULT NULL,
+  `date_rated` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `rating`, `remarks`, `rated_by`, `date_rated`) VALUES
+(8, '4', 'good service', 'AD-PS', 'February 14, 2025 3:06:pm  ');
 
 -- --------------------------------------------------------
 
@@ -81,16 +102,20 @@ INSERT INTO `requeststocktemp` (`request_temp_id`, `ris_no`, `stock_id`, `divisi
 (103, '2025-02-026', '30', NULL, 'PPMU-2023-30', 'Folder, L-type, A4 size, 216mm x 304mm, 50/pack', 'Folder, L-type, A4 size, 216mm x 304mm, 50/pack', '265', '2', 'ORED-ORED', 'February 7, 2025 9:53:am  ', 'For Delivery', NULL),
 (104, '2025-02-028', '28', NULL, 'PPMU-2023-28', 'Highlighter green', 'Highlighter green', '325', '5', 'FD-BUDGET', 'February 7, 2025 9:57:am  ', 'Completed', NULL),
 (105, '2025-02-028', '50', NULL, 'PPMU-2023-50', 'Pencil', 'Pencil', '4115', '2', 'FD-BUDGET', 'February 7, 2025 9:58:am  ', 'Completed', NULL),
-(106, '2025-02-027', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '10', 'AD-PS', 'February 7, 2025 10:02:am  ', 'For Delivery', NULL),
+(106, '2025-02-027', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '10', 'AD-PS', 'February 7, 2025 10:02:am  ', 'Completed', NULL),
 (110, '2025-02-029', '1', NULL, 'PPMU-2023-01', 'Official Receipt', 'Official Receipt', '100', '3', 'COA-COA', 'February 7, 2025 10:30:am  ', 'For Delivery', NULL),
-(113, '2025-02-030', '4', NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '1000', '12', 'AD-PS', 'February 7, 2025 11:22:am  ', 'For Delivery', NULL),
-(114, '2025-02-030', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '9', 'AD-PS', 'February 7, 2025 11:23:am  ', 'For Delivery', NULL),
+(113, '2025-02-030', '4', NULL, 'PPMU-2023-04', 'Bond paper with DENR letterhead, A4 size (new format)', 'Bond paper with DENR letterhead, A4 size (new format)', '1000', '12', 'AD-PS', 'February 7, 2025 11:22:am  ', 'Completed', NULL),
+(114, '2025-02-030', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '9', 'AD-PS', 'February 7, 2025 11:23:am  ', 'Completed', NULL),
 (115, '2025-02-031', '1', NULL, 'PPMU-2023-01', 'Official Receipt', 'Official Receipt', '100', '2', 'AD-PS', 'February 7, 2025 11:24:am  ', 'Requested', 'test'),
 (116, '2025-02-031', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '10', 'AD-PS', 'February 7, 2025 11:24:am  ', 'Requested', 'test'),
 (117, '2025-02-031', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'AD-PS', 'February 7, 2025 12:16:pm  ', 'Requested', 'test'),
 (118, '2025-02-031', '1', NULL, 'PPMU-2023-01', 'Official Receipt', 'Official Receipt', '100', '2', 'AD-PS', 'February 7, 2025 1:31:pm  ', 'Requested', 'test'),
 (119, '2025-02-031', '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '50', 'AD-PS', 'February 7, 2025 1:32:pm  ', 'Requested', 'test'),
-(120, '2025-02-031', '14', NULL, 'PPMU-2023-14', 'Envelope brown, A4 size', 'Envelope brown, A4 size', '6850', '7', 'AD-PS', 'February 7, 2025 1:32:pm  ', 'Requested', 'test');
+(120, '2025-02-031', '14', NULL, 'PPMU-2023-14', 'Envelope brown, A4 size', 'Envelope brown, A4 size', '6850', '7', 'AD-PS', 'February 7, 2025 1:32:pm  ', 'Requested', 'test'),
+(121, NULL, '3', NULL, 'PPMU-2023-03', 'Binder clips, 19mm', 'Binder clips, 19mm', '8.76', '1', 'AD-PS', 'February 11, 2025 11:09:am  ', 'Pending', NULL),
+(122, NULL, '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '10', 'AD-PS', 'February 13, 2025 1:23:pm  ', 'Pending', NULL),
+(123, NULL, '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '5', 'AD-GSS', 'February 13, 2025 1:30:pm  ', 'Pending', NULL),
+(126, NULL, '5', NULL, 'PPMU-2023-05', 'Bond paper with DENR letterhead, Legal size (new format)', 'Bond paper with DENR letterhead, Legal size (new format)', '1200', '10', 'AD-PS', 'February 13, 2025 4:25:pm  ', 'Pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -445,6 +470,12 @@ INSERT INTO `wishlist` (`id`, `stock_id`, `product_name`, `product_description`,
 --
 
 --
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `requeststocktemp`
 --
 ALTER TABLE `requeststocktemp`
@@ -480,10 +511,16 @@ ALTER TABLE `wishlist`
 --
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `requeststocktemp`
 --
 ALTER TABLE `requeststocktemp`
-  MODIFY `request_temp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `request_temp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `stock`
