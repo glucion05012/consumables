@@ -263,7 +263,14 @@ SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where s
     }
 
     public function list_one($id){
-        $query = $this->db->query("SELECT * FROM stock where stock_id = $id");
+        $query = $this->db->query("SELECT 
+a.*,
+b.total_count_pending
+FROM stock a
+LEFT JOIN(
+SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where status='Pending' GROUP BY stock_id) as b on a.stock_id=b.stock_id
+                                    WHERE a.stock_id = $id");
+        
     return $query->row_array();
     }
 

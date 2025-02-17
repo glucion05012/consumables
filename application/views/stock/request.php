@@ -375,6 +375,7 @@
                             <h3 id="productlabel"></h3>
                             <h5 id="desclabel"></h5><br><br>
                             <p>Remaining: <p id ="ratelabel"></p></p>
+                            <input type="text" id="ratelabelval" hidden>
                         
                             <div class="row">
 
@@ -770,6 +771,15 @@ setInterval( function () {
         //     });
         // }
     });
+    
+    $('#addCnt').on('input', function() {
+        var rate = $('#ratelabelval').val();
+        var addCnt = $('#addCnt').val();
+        if(parseInt(rate) < parseInt(addCnt)){
+            alert("Count should not exceed the remaining stock.");
+            $('#addCnt').val('');
+        }
+    });
 
     $(document).on('click', '#addBtn', function() {
         $('#addItemModal').modal('show');
@@ -792,7 +802,8 @@ setInterval( function () {
                     $('#productlabel').html(data.product);
                     $('#productlabel2').html(data.product);
                     $('#desclabel').html(data.description);
-                    $('#ratelabel').html(data.rate);
+                    $('#ratelabel').html(parseInt(data.rate)-parseInt(data.total_count_pending)+' '+data.unit);
+                    $('#ratelabelval').val(parseInt(data.rate)-parseInt(data.total_count_pending));
                     $('#skulabel').html(data.sku);
                     
                 } else {
