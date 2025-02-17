@@ -572,7 +572,7 @@ $(document).ready(function() {
     $('#requestTable').DataTable({
         'pageLength': 10,
         'serverSide': true,
-        'processing': true,
+        'processing': false,
         'ordering': false,
         "bDestroy": true,
         'order': [],
@@ -725,6 +725,10 @@ $(document).ready(function() {
         }
     });
 } );
+
+setInterval( function () {
+ $('#requestTable').DataTable().ajax.reload();
+ }, 5000);
     
     $(document).on('click', '#wishBtn', function(){ 
         $('#addWishList').modal('show');
