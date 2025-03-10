@@ -130,7 +130,7 @@ a.*,
 b.total_count_pending
 FROM stock a
 LEFT JOIN(
-SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where status='Pending' GROUP BY stock_id) as b on a.stock_id=b.stock_id
+SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where (status='Pending' or status='Requested' or status='For Delivery') GROUP BY stock_id) as b on a.stock_id=b.stock_id
                                     WHERE 
                                     (
                                         a.sku LIKE CONCAT('%$search%') OR 

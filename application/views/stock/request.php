@@ -727,9 +727,9 @@ $(document).ready(function() {
     });
 } );
 
-setInterval( function () {
- $('#requestTable').DataTable().ajax.reload();
- }, 5000);
+// setInterval( function () {
+//  $('#requestTable').DataTable().ajax.reload();
+//  }, 5000);
     
     $(document).on('click', '#wishBtn', function(){ 
         $('#addWishList').modal('show');

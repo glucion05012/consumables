@@ -319,7 +319,7 @@
                     // regular access
                     $json[] = array(
                         $rows['sku'],
-                        $rows['product'],
+                        $rows['product'].' - '.$rows['description'],
                         $rows['rate']-$rows['total_count_pending'].' '.$rows['unit'],
                         $rows['threshold'].' '.$rows['unit'],
                         $action_btn.$action_btn2.$action_btn3
@@ -672,25 +672,25 @@
                 $data['itemTemp'] =  $this->stock_model->itemTemp();
                 $kasya = 0;
                 
-                foreach($data['lists'] as $ht){
-                    foreach($data['itemTemp'] as $htemp){
-                        if($ht['stock_id'] == $htemp['stock_id']){
-                            if($ht['rate'] >= $htemp['count']){
-                                $kasya = 1;
-                            }else{
-                                $kasya = 0;
-                                break 2;
-                            }
-                        }
-                    }
-                }
+                // foreach($data['lists'] as $ht){
+                //     foreach($data['itemTemp'] as $htemp){
+                //         if($ht['stock_id'] == $htemp['stock_id']){
+                //             if($ht['rate'] >= $htemp['count']){
+                //                 $kasya = 1;
+                //             }else{
+                //                 $kasya = 0;
+                //                 break 2;
+                //             }
+                //         }
+                //     }
+                // }
                 
-                if($kasya == 1){
+                // if($kasya == 1){
                     $this->stock_model->addItemTempRequested();
                     $this->session->set_flashdata('successmsg', 'Stocks Successfully Requested!');
-                }else{
-                    $this->session->set_flashdata('errormsg', 'Insufficient Stocks!');
-                }
+                // }else{
+                //     $this->session->set_flashdata('errormsg', 'Insufficient Stocks!');
+                // }
                 // $countTemp = json_encode($ht[0]['rate']);
                 // $countTemp json_decode( $countTemp );
                 // $this->stock_model->addItemTempRequested();
