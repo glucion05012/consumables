@@ -124,6 +124,12 @@ class Stock_model extends CI_Model{
         return $query->num_rows();
     }
 
+    public function ris_list_ajax_one($id){
+        $query = $this->db->query("SELECT * FROM requeststocktemp LEFT JOIN user on requeststocktemp.requested_by = user.division
+                                    WHERE ris_no = '$id'");
+        return $query->result_array();
+    }
+
     public function request_list_ajax($length, $start, $search){
         $query = $this->db->query("SELECT 
 a.*,
@@ -517,10 +523,15 @@ SELECT stock_id, SUM(count) AS total_count_pending FROM requeststocktemp where s
         return $query->result_array();
     }
 
-    public function getrishistory(){
-         $query = $this->db->query("SELECT a.*, b.unit FROM requeststocktemp a LEFT JOIN stock b on a.stock_id = b.stock_id");
+    public function getrishistory($id){
+         $query = $this->db->query("SELECT a.*, b.unit FROM requeststocktemp a LEFT JOIN stock b on a.stock_id = b.stock_id where ris_no='$id'");
          return $query->result_array();
      }
+
+     public function getrishistory_count($id){
+        $query = $this->db->query("SELECT a.*, b.unit FROM requeststocktemp a LEFT JOIN stock b on a.stock_id = b.stock_id where ris_no='$id'");
+        return $query->num_rows();
+    }
     
      public function addWishList(){
         $data = array(

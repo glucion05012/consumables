@@ -531,7 +531,44 @@
             $data['stockListOne'] =  $this->stock_model->list_one($id);
             echo json_encode($data['stockListOne']);        
         }
+
+        public function ris_list_ajax_one($id){
+            $data['stockListOne'] =  $this->stock_model->ris_list_ajax_one($id);
+            echo json_encode($data['stockListOne']);        
+        }
         
+        public function getrishistory($id){
+            $query =  $this->stock_model->getrishistory($id);
+            $query_all =  $this->stock_model->getrishistory_count($id);
+            $json = array();
+            
+            foreach($query as $rows){
+
+                // regular access
+                $json[] = array(
+                    $rows['sku'],
+                    $rows['unit'],
+                    $rows['product'],
+                    $rows['count'],
+                    'x',
+                    '',
+                    '',
+                    '',
+                );
+               
+            }
+            
+            $total_records = $query_all;
+            $response = array(
+                'draw'  => 1,
+                'recordsTotal' => $total_records,
+                'recordsFiltered' => $total_records,
+                'data' => $json ?: []
+            );
+            
+            echo json_encode($response);
+        }
+
         public function addItemNotList(){
             if(isset($_SESSION['fullname'])){
                 $this->stock_model->addItemNotList();
@@ -767,7 +804,6 @@
         public function ris(){
             if(isset($_SESSION['fullname'])){
                $data['getris'] =  $this->stock_model->getris();
-               $data['getrishistory'] =  $this->stock_model->getrishistory();
                
                 // echo json_encode($data['getrishistory']);
                 $this->load->view('templates/header');
