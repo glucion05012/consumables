@@ -8,7 +8,6 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	// 'password' => '$2y$10$K1hW8Cz/7q6P7T1LJZlUIOV5m3PjJThHyZJndcGziUURCgBzUpU2e',   
 	'password' => '',   
 	'database' => 'consumables',
 	'dbdriver' => 'mysqli',
